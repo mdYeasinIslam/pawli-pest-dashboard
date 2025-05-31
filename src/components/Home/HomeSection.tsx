@@ -3,7 +3,7 @@
 import type React from "react"
 
 import { useState } from "react"
-import { BatteryFull, ChevronRight, Info, Settings, SignalHigh, Upload, Wifi, X } from "lucide-react"
+import { BatteryFull, BookCheck, Bookmark, BookmarkCheck, ChevronRight, Info, Megaphone, MessageCircle, Settings, SignalHigh, Upload, Wifi, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 
@@ -41,7 +41,7 @@ export default function HomeSection() {
 
             {/* Main Content */}
             <div className=" ">
-                <div className=" grid grid-cols-1 lg:grid-cols-3  gap-6 max-w-7xl mx-auto">
+                <div className=" grid grid-cols-1 lg:grid-cols-3  gap-6 ">
                 {/* Left Column - Upload Area */}
                     <div className="lg:col-span-1 h-full ">
                         <div
@@ -93,7 +93,7 @@ export default function HomeSection() {
                 </div>
 
                 {/* Action Buttons */}
-                <div className="flex justify-end space-x-4 mt-8">
+                <div className=" flex justify-end space-x-4 mt-8">
                 <Button className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg font-medium">Validate</Button>
                 <Button
                      onClick={() => setShowPreviewModal(true)}
@@ -141,26 +141,26 @@ export default function HomeSection() {
 
                       {/* App Header */}
                       <div className="bg-white px-4  flex items-center justify-between ">
-                        <div className="w-6 h-6 bg-gray-100 rounded"><Settings className="text-black"/></div>
+                        <div className="w-10 h-10 bg-gray-100 rounded place-content-center place-items-center"><Settings className="text-black"/></div>
                         <span className="font-semibold text-lg  ">Le chiffre du jour</span>
-                        <div className="w-6 h-6 bg-gray-100 rounded"><Settings /></div>
+                        <div className="w-10 h-10 bg-gray-100 rounded  place-content-center place-items-center"><BookmarkCheck strokeWidth={3} /></div>
                       </div>
                     </div>
 
                       {/* Content Area */}
-                      <div className=" bg-black text-white p-4 h-1/2 place-content-center relative rounded-md">
+                      <div className=" bg-black text-white p-4 h-[60%] place-content-center relative rounded-md">
                         <div className="absolute top-4 right-4">
                           <div className=" flex items-center justify-center"><Info strokeWidth={3} />
                             {/* <div className="w-3 h-3 border border-white rounded-full"></div> */}
                           </div>
                         </div>
-                        <div className="mt-8">
-                          <div className="text-xs mb-2">
-                            <span className="bg-blue-600 px-2 py-1 rounded text-white">En 2024, Dassault Systèmes</span>
-                            <span className="bg-red-600 px-2 py-1 rounded text-white ml-1">RECORD</span>
-                          </div>
+                        <div className="">
+                          {/* <div className="text-xs mb-2">
+                            <span className=" py-1 rounded text-white"></span>
+                            <span className=" py-1 rounded text-white ml-1"></span>
+                          </div> */}
                           <p className="text-xs leading-relaxed">
-                            Dassault Systèmes a atteint un chiffre d'affaires record de 5,6 milliards d'euros en 2024,
+                           En 2024, Dassault Systèmes RECORD Dassault Systèmes a atteint un chiffre d'affaires record de 5,6 milliards d'euros en 2024,
                             marquant une croissance de 8% par rapport à l'année précédente et confirmant sa position de
                             leader mondial des logiciels de conception 3D et de simulation.
                           </p>
@@ -172,16 +172,16 @@ export default function HomeSection() {
 
                       {/* Bottom Navigation */}
                       <div className="bg-white px-4 py-3 flex justify-center space-x-8">
-                        <div className="w-6 h-6 1 bg-gray-300 rounded"></div>
-                        <div className="w-6 h-6 bg-gray-300 rounded"></div>
-                        <div className="w-6 h-6 bg-gray-300 rounded"></div>
+                        <div className="w-10 h-10 bg-gray-100 rounded  place-content-center place-items-center"><Bookmark strokeWidth={3} /></div>
+                         <div className="w-10 h-10 bg-gray-100 rounded  place-content-center place-items-center"><Megaphone strokeWidth={3} /></div>
+                         <div className="w-10 h-10 bg-gray-100 rounded  place-content-center place-items-center"><MessageCircle strokeWidth={3} /></div>
                       </div>
                     </div>
                   </div>
                 </div>
 
                 {/* Second Phone Mockup */}
-                 <div className="relative">
+                   <div className="relative">
                   <div className="w-80 h-[550px] bg-black rounded-[2.5rem] p-2">
                     <div className="flex flex-col justify-between w-full h-full bg-white rounded-[2rem] overflow-hidden px-2">
                     <div className="space-y-2">
@@ -190,7 +190,7 @@ export default function HomeSection() {
                         <span className="font-medium">9:41</span>
                         <div className="w-20  h-5 bg-black rounded-full"></div>
                         <div className="flex space-x-1">
-                          <div className="  rounded-sm"><SignalHigh className="w-5 h-5 text-black" strokeWidth={3} /></div>
+                          <div className="  rounded-sm"><SignalHigh className="w-5 h-5 text-black" strokeWidth={4} /></div>
                           <div className=" rounded-sm"><Wifi className="w-5 h-5 text-black" strokeWidth={3} /></div>
                           <div className=" rounded-sm"> <BatteryFull className="w-5 h-5 text-black" /></div>
                         </div>
@@ -198,26 +198,26 @@ export default function HomeSection() {
 
                       {/* App Header */}
                       <div className="bg-white px-4  flex items-center justify-between ">
-                        <div className="w-6 h-6 bg-gray-100 rounded"><Settings className="text-black"/></div>
+                        <div className="w-10 h-10 bg-gray-100 rounded place-content-center place-items-center"><Settings className="text-black"/></div>
                         <span className="font-semibold text-lg  ">Le chiffre du jour</span>
-                        <div className="w-6 h-6 bg-gray-100 rounded"><Settings /></div>
+                        <div className="w-10 h-10 bg-gray-100 rounded  place-content-center place-items-center"><BookmarkCheck strokeWidth={3} /></div>
                       </div>
                     </div>
 
                       {/* Content Area */}
-                      <div className=" bg-black text-white p-4 h-1/2 place-content-center relative rounded-md">
+                      <div className=" bg-black text-white p-4 h-[60%] place-content-center relative rounded-md">
                         <div className="absolute top-4 right-4">
-                          <div className="w-6 h-6 border border-white rounded-full flex items-center justify-center">
-                            <div className="w-3 h-3 border border-white rounded-full"></div>
+                          <div className=" flex items-center justify-center"><Info strokeWidth={3} />
+                            {/* <div className="w-3 h-3 border border-white rounded-full"></div> */}
                           </div>
                         </div>
-                        <div className="mt-8">
-                          <div className="text-xs mb-2">
-                            <span className="bg-blue-600 px-2 py-1 rounded text-white">En 2024, Dassault Systèmes</span>
-                            <span className="bg-red-600 px-2 py-1 rounded text-white ml-1">RECORD</span>
-                          </div>
+                        <div className="">
+                          {/* <div className="text-xs mb-2">
+                            <span className=" py-1 rounded text-white"></span>
+                            <span className=" py-1 rounded text-white ml-1"></span>
+                          </div> */}
                           <p className="text-xs leading-relaxed">
-                            Dassault Systèmes a atteint un chiffre d'affaires record de 5,6 milliards d'euros en 2024,
+                           En 2024, Dassault Systèmes RECORD Dassault Systèmes a atteint un chiffre d'affaires record de 5,6 milliards d'euros en 2024,
                             marquant une croissance de 8% par rapport à l'année précédente et confirmant sa position de
                             leader mondial des logiciels de conception 3D et de simulation.
                           </p>
@@ -229,13 +229,14 @@ export default function HomeSection() {
 
                       {/* Bottom Navigation */}
                       <div className="bg-white px-4 py-3 flex justify-center space-x-8">
-                        <div className="w-6 h-6 1 bg-gray-300 rounded"></div>
-                        <div className="w-6 h-6 bg-gray-300 rounded"></div>
-                        <div className="w-6 h-6 bg-gray-300 rounded"></div>
+                        <div className="w-10 h-10 bg-gray-100 rounded  place-content-center place-items-center"><Bookmark strokeWidth={3} /></div>
+                         <div className="w-10 h-10 bg-gray-100 rounded  place-content-center place-items-center"><Megaphone strokeWidth={3} /></div>
+                         <div className="w-10 h-10 bg-gray-100 rounded  place-content-center place-items-center"><MessageCircle strokeWidth={3} /></div>
                       </div>
                     </div>
                   </div>
                 </div>
+
 
               </div>
 
