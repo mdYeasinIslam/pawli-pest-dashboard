@@ -3,7 +3,7 @@
 import type React from "react"
 
 import { useState } from "react"
-import { BatteryFull, ChevronRight, Settings, SignalHigh, Upload, Wifi, X } from "lucide-react"
+import { BatteryFull, ChevronRight, Info, Settings, SignalHigh, Upload, Wifi, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 
@@ -108,7 +108,7 @@ export default function HomeSection() {
             {/* Preview Modal */}
       {showPreviewModal && (
         <div className="fixed inset-0 bg-[#180E25]/50 backdrop-blur-sm flex items-center justify-center z-50">
-          <div className=" rounded-lg shadow-xl max-w-4xl w-full mx-4 max-h-[90vh] overflow-hidden">
+          <div className=" rounded-lg shadow-xl max-w-4xl w-full mx-4 overflow-hidden">
             {/* Modal Header */}
             <div className="bg-black text-white px-6 py-3 flex items-center justify-between">
               <span className="text-sm font-medium">Post n°1 - Time of publication: 11 AM, July 1st, 2025</span>
@@ -125,7 +125,7 @@ export default function HomeSection() {
               <div className="flex justify-center space-x-8">
                 {/* First Phone Mockup */}
                 <div className="relative">
-                  <div className="w-80 h-[600px] bg-black rounded-[2.5rem] p-2">
+                  <div className="w-80 h-[550px] bg-black rounded-[2.5rem] p-2">
                     <div className="flex flex-col justify-between w-full h-full bg-white rounded-[2rem] overflow-hidden px-2">
                     <div className="space-y-2">
                       {/* Phone Status Bar */}
@@ -133,7 +133,7 @@ export default function HomeSection() {
                         <span className="font-medium">9:41</span>
                         <div className="w-20  h-5 bg-black rounded-full"></div>
                         <div className="flex space-x-1">
-                          <div className="  rounded-sm"><SignalHigh className="w-5 h-5 text-black" strokeWidth={3} /></div>
+                          <div className="  rounded-sm"><SignalHigh className="w-5 h-5 text-black" strokeWidth={4} /></div>
                           <div className=" rounded-sm"><Wifi className="w-5 h-5 text-black" strokeWidth={3} /></div>
                           <div className=" rounded-sm"> <BatteryFull className="w-5 h-5 text-black" /></div>
                         </div>
@@ -150,8 +150,8 @@ export default function HomeSection() {
                       {/* Content Area */}
                       <div className=" bg-black text-white p-4 h-1/2 place-content-center relative rounded-md">
                         <div className="absolute top-4 right-4">
-                          <div className="w-6 h-6 border border-white rounded-full flex items-center justify-center">
-                            <div className="w-3 h-3 border border-white rounded-full"></div>
+                          <div className=" flex items-center justify-center"><Info strokeWidth={3} />
+                            {/* <div className="w-3 h-3 border border-white rounded-full"></div> */}
                           </div>
                         </div>
                         <div className="mt-8">
@@ -182,7 +182,7 @@ export default function HomeSection() {
 
                 {/* Second Phone Mockup */}
                  <div className="relative">
-                  <div className="w-80 h-[600px] bg-black rounded-[2.5rem] p-2">
+                  <div className="w-80 h-[550px] bg-black rounded-[2.5rem] p-2">
                     <div className="flex flex-col justify-between w-full h-full bg-white rounded-[2rem] overflow-hidden px-2">
                     <div className="space-y-2">
                       {/* Phone Status Bar */}
@@ -240,17 +240,11 @@ export default function HomeSection() {
               </div>
 
               {/* Modal Action Buttons */}
-              {/* <div className="flex justify-center space-x-4 mt-8">
-                <Button className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg font-medium">
-                  Validate
-                </Button>
-                <Button className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg font-medium">
-                  Preview
-                </Button>
-                <Button className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 rounded-lg font-medium">
+              <div className="flex justify-end space-x-4 ">
+                <Button className="bg-black hover:bg-gray-700 text-white mt-3 px-6 py-4 rounded-lg font-medium">
                   Save post
                 </Button>
-              </div> */}
+              </div>
             </div>
           </div>
         </div>
