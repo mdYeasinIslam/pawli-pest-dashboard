@@ -5,36 +5,35 @@ import Image from 'next/image';
 import { toast } from 'sonner';
 
 interface ModalProps {
+    selectedFile: File | null;
     uploadedImage: string | null;
     text: string,
     content:string
     setShowPreviewModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Modal: React.FC<ModalProps> = ({ uploadedImage,text, content, setShowPreviewModal }) => {
+const Modal: React.FC<ModalProps> = ({ selectedFile,uploadedImage,text, content, setShowPreviewModal }) => {
     
-    const handlePostContent =  () => {
-        // const postContent = {
-        //     content,
-        //     link: text,
-        //     status:'CURRENT'
-        // };
-         fetch('https://paulinefst.onrender.com/api/v1/posts', {
-            method: 'POST',
-            headers: {
-                
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify( {
+    const handlePostContent = () => {
+        
+        if (!selectedFile) return;
+
+        const formData = new FormData();
+         const data = {
             content,
             link: text,
-            status:'CURRENT'
-        })
+            status: 'PENDING', // or 'CURRENT' if you want
+            scheduledAt: new Date().toISOString(), // add this only if required by backend
+        };
+
+        formData.append('data', JSON.stringify(data)); // 🟡 send the data field as a JSON string
+        formData.append('images', selectedFile); // ✅ exact key 'images' as per backend
+         fetch('https://paulinefst.onrender.com/api/v1/posts', {
+            method: 'POST',
+           
+             body: formData, // Use FormData to send the file
          }).then((response) => response.json())
              .then((data) => {
-                 console.log('Post content saved successfully:', data);
-                 // setShowPreviewModal(false);
-                 // Optionally, you can show a success message or perform other actions  
                  if (data && data.success) {
                      toast.success('Post content saved successfully!');
                  }
@@ -110,16 +109,16 @@ const Modal: React.FC<ModalProps> = ({ uploadedImage,text, content, setShowPrevi
                                                        
                                                     </div>
                                                 </div>
-                                                <div className="">
+                                                {/* <div className="">
                                                     <h4>{text}</h4>
                                                     <p className="text-xs leading-relaxed">
                                                     {content}
                                                     </p>
-                                                </div>
-                                                <div className="absolute bottom-4 right-4">
+                                                </div> */}
+                                                {/* <div className="absolute bottom-4 right-4">
                                                     <Image
                                                 src="/logo-paulin.png" alt="Placeholder" width={500} height={500} className="w-14  h-14 object-cover   rounded-full" />
-                                                </div>
+                                                </div> */}
                                             </div>
 
                                             {/* Bottom Navigation */}
@@ -133,8 +132,11 @@ const Modal: React.FC<ModalProps> = ({ uploadedImage,text, content, setShowPrevi
                                 </div>
 
                                 {/* Second Phone Mockup */}
-                                   <div className="relative">
-                                    <div className="w-80 h-[550px] bg-black rounded-[2.5rem] p-2">
+                                    <div className="relative">
+                                    <div
+                                        className="w-80 h-[550px] bg-black rounded-[2.5rem] p-2"
+                                        
+                                    >
                                         <div className="flex flex-col justify-between w-full h-full bg-white rounded-[2rem] overflow-hidden px-2">
                                         <div className="space-y-2">
                                             {/* Phone Status Bar */}
@@ -157,23 +159,36 @@ const Modal: React.FC<ModalProps> = ({ uploadedImage,text, content, setShowPrevi
                                         </div>
 
                                             {/* Content Area */}
-                                            <div className=" bg-black text-white p-4 h-[60%] place-content-center relative rounded-md">
+                                            <div 
+                                            
+                                            className=" bg-black text-white p-4 h-[60%] place-content-center relative rounded-md"
+                                             style={
+                                            uploadedImage
+                                                ? {
+                                                    backgroundImage: `url(${uploadedImage})`,
+                                                    backgroundSize: 'cover',
+                                                    backgroundPosition: 'center'
+                                                }
+                                                : {
+                                                    backgroundColor: '#f0f0f0'
+                                                }
+                                        }
+                                            >
                                                 <div className="absolute top-4 right-4">
                                                     <div className=" flex items-center justify-center"><Info strokeWidth={3} />
                                                        
                                                     </div>
                                                 </div>
-                                                <div className="">
+                                                {/* <div className="">
                                                     <h4>{text}</h4>
                                                     <p className="text-xs leading-relaxed">
                                                     {content}
                                                     </p>
-                                                </div>
-                                                <div className="absolute bottom-4 right-4">
-                                                    {/* <span className="text-xs">@Hiciel</span> */}
-                                            <Image
+                                                </div> */}
+                                                {/* <div className="absolute bottom-4 right-4">
+                                                    <Image
                                                 src="/logo-paulin.png" alt="Placeholder" width={500} height={500} className="w-14  h-14 object-cover   rounded-full" />
-                                                </div>
+                                                </div> */}
                                             </div>
 
                                             {/* Bottom Navigation */}

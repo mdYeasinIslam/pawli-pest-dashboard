@@ -28,8 +28,8 @@ export default function HomeSection() {
   const [dragActive, setDragActive] = useState(false)
   const [uploadedImage, setUploadedImage] = useState<string | null>(initialData?.imagePreview || null)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
-  console.log(uploadedImage)
-  console.log( selectedFile)
+  // console.log(uploadedImage)
+  // console.log( selectedFile)
 
   // State for link and content text
   // These states will hold the text for the link and content areas
@@ -188,6 +188,7 @@ export default function HomeSection() {
             {/* Preview Modal */}
                 {showPreviewModal && (
                 <Modal 
+                selectedFile={selectedFile}
                 uploadedImage={uploadedImage}
                 text={linkText}
                 content={contentText}    
