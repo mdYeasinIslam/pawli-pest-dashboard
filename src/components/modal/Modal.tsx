@@ -69,7 +69,7 @@ const Modal: React.FC<ModalProps> = ({ text, content, setShowPreviewModal }) => 
                                             {/* Phone Status Bar */}
                                             <div className="bg-white px-4 py-2 flex justify-between items-center text-xs">
                                                 <span className="font-medium">9:41</span>
-                                                <div className="w-20  h-5 bg-black rounded-full"></div>
+                                                {/* <div className="w-20  h-5 bg-black rounded-full"></div> */}
                                                 <div className="flex space-x-1">
                                                     <div className="  rounded-sm"><SignalHigh className="w-5 h-5 text-black" strokeWidth={4} /></div>
                                                     <div className=" rounded-sm"><Wifi className="w-5 h-5 text-black" strokeWidth={3} /></div>
@@ -122,7 +122,7 @@ const Modal: React.FC<ModalProps> = ({ text, content, setShowPreviewModal }) => 
                                             {/* Phone Status Bar */}
                                             <div className="bg-white px-4 py-2 flex justify-between items-center text-xs">
                                                 <span className="font-medium">9:41</span>
-                                                <div className="w-20  h-5 bg-black rounded-full"></div>
+                                                {/* <div className="w-20  h-5 bg-black rounded-full"></div> */}
                                                 <div className="flex space-x-1">
                                                     <div className="  rounded-sm"><SignalHigh className="w-5 h-5 text-black" strokeWidth={4} /></div>
                                                     <div className=" rounded-sm"><Wifi className="w-5 h-5 text-black" strokeWidth={3} /></div>
