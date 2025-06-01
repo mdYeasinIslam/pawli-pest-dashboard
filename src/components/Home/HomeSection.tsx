@@ -128,17 +128,17 @@ export default function HomeSection() {
                     {/* Center Column - Notification Blocks */}
                     <div className="lg:col-span-1 space-y-4">
                         {/* Tooltip Content */}
-                        <div className="bg-[#156082] text-white rounded-lg h-40 text-center place-content-center ">
+                        <div className="bg-[#156082] text-white rounded-lg h-48 text-center place-content-center ">
                         <span className="font-medium">Tooltip content</span>
                         </div>
 
                         {/* Push Notification Header */}
-                        <div className="bg-[#00B0F0] text-white rounded-lg h-40 text-center place-content-center">
+                        <div className="bg-[#00B0F0] text-white rounded-lg h-48 text-center place-content-center">
                         <span className="font-medium">Push notification header</span>
                         </div>
 
                         {/* Push Notification Text */}
-                        <div className="bg-[#00B0F0] text-white rounded-lg h-40 text-center place-content-center">
+                        <div className="bg-[#00B0F0] text-white rounded-lg h-48 text-center place-content-center">
                         <span className="font-medium">Push notification text</span>
                         </div>
                     </div>
