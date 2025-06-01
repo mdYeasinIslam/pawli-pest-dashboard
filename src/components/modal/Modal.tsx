@@ -1,8 +1,9 @@
 import React from 'react'
 import { Button } from '../ui/button'
-import { BatteryFull, Bookmark, BookmarkCheck, Info, Megaphone, MessageCircle, Settings, SignalHigh, Wifi, X } from 'lucide-react'
-import Image from 'next/image';
+import { BatteryFull, Bookmark, BookmarkCheck, Check, CheckCircle, Info, Megaphone, MessageCircle, Settings, SignalHigh, Wifi, X } from 'lucide-react'
 import { toast } from 'sonner';
+import { BsFillBookmarkCheckFill } from 'react-icons/bs';
+import { GrAnnounce } from 'react-icons/gr';
 
 interface ModalProps {
     selectedFile: File | null;
@@ -64,17 +65,18 @@ const Modal: React.FC<ModalProps> = ({ selectedFile,uploadedImage,text, content,
                                 {/* First Phone Mockup */}
                                 <div className="relative">
                                     <div
-                                        className="w-80 h-[550px] bg-black rounded-[2.5rem] p-2"
+                                        className="w-80 h-[650px] bg-black rounded-[2.5rem] p-2"
                                         
                                     >
-                                        <div className="flex flex-col justify-between w-full h-full bg-white rounded-[2rem] overflow-hidden px-2">
+                                <div className="flex flex-col justify-between w-full h-full bg-white rounded-[2rem] overflow-hidden px-2">
+                                    
                                         <div className="space-y-2">
                                             {/* Phone Status Bar */}
                                             <div className="bg-white px-4 py-2 flex justify-between items-center text-xs">
                                                 <span className="font-medium">9:41</span>
                                                 {/* <div className="w-20  h-5 bg-black rounded-full"></div> */}
                                                 <div className="flex space-x-1">
-                                                    <div className="  rounded-sm"><SignalHigh className="w-5 h-5 text-black" strokeWidth={4} /></div>
+                                                    <div className="  rounded-sm"><SignalHigh className="w-5 h-5 text-black" strokeWidth={3} /></div>
                                                     <div className=" rounded-sm"><Wifi className="w-5 h-5 text-black" strokeWidth={3} /></div>
                                                     <div className=" rounded-sm"> <BatteryFull className="w-5 h-5 text-black" /></div>
                                                 </div>
@@ -82,9 +84,9 @@ const Modal: React.FC<ModalProps> = ({ selectedFile,uploadedImage,text, content,
 
                                             {/* App Header */}
                                             <div className="bg-white px-4  flex items-center justify-between ">
-                                                <div className="w-10 h-10 bg-gray-100 rounded place-content-center place-items-center"><Settings className="text-black"/></div>
+                                                <div className="w-7 h-7 bg-gray-100 rounded place-content-center place-items-center"><Settings  strokeWidth={2} className="text-black w-5 h-5"/></div>
                                                 <span className="font-semibold text-lg  ">Le chiffre du jour</span>
-                                                <div className="w-10 h-10 bg-gray-100 rounded  place-content-center place-items-center"><BookmarkCheck strokeWidth={3} /></div>
+                                                <div className="w-7 h-7 bg-gray-100 rounded  place-content-center place-items-center"><BsFillBookmarkCheckFill  className='w-5 h-5'/></div>
                                             </div>
                                         </div>
 
@@ -123,18 +125,18 @@ const Modal: React.FC<ModalProps> = ({ selectedFile,uploadedImage,text, content,
 
                                             {/* Bottom Navigation */}
                                             <div className="bg-white px-4 py-3 flex justify-center space-x-8">
-                                                <div className="w-10 h-10 bg-gray-100 rounded  place-content-center place-items-center"><Bookmark strokeWidth={3} /></div>
-                                                 <div className="w-10 h-10 bg-gray-100 rounded  place-content-center place-items-center"><Megaphone strokeWidth={3} /></div>
-                                                 <div className="w-10 h-10 bg-gray-100 rounded  place-content-center place-items-center"><MessageCircle strokeWidth={3} /></div>
+                                                <div className="w-10 h-10 bg-gray-100 rounded  place-content-center place-items-center"><Bookmark strokeWidth={2} className='w-5 h-5'/></div>
+                                                 <div className="w-10 h-10 bg-gray-100 rounded  place-content-center place-items-center"><GrAnnounce  strokeWidth={2} className='w-5 h-5'/></div>
+                                                 <div className="w-10 h-10 bg-gray-100 rounded  place-content-center place-items-center"><MessageCircle strokeWidth={2} className='w-5 h-5'/></div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
                                 {/* Second Phone Mockup */}
-                                    <div className="relative">
+                                   <div className="relative">
                                     <div
-                                        className="w-80 h-[550px] bg-black rounded-[2.5rem] p-2"
+                                        className="w-80 h-[650px] bg-black rounded-[2.5rem] p-2"
                                         
                                     >
                                         <div className="flex flex-col justify-between w-full h-full bg-white rounded-[2rem] overflow-hidden px-2">
@@ -144,7 +146,7 @@ const Modal: React.FC<ModalProps> = ({ selectedFile,uploadedImage,text, content,
                                                 <span className="font-medium">9:41</span>
                                                 {/* <div className="w-20  h-5 bg-black rounded-full"></div> */}
                                                 <div className="flex space-x-1">
-                                                    <div className="  rounded-sm"><SignalHigh className="w-5 h-5 text-black" strokeWidth={4} /></div>
+                                                    <div className="  rounded-sm"><SignalHigh className="w-5 h-5 text-black" strokeWidth={3} /></div>
                                                     <div className=" rounded-sm"><Wifi className="w-5 h-5 text-black" strokeWidth={3} /></div>
                                                     <div className=" rounded-sm"> <BatteryFull className="w-5 h-5 text-black" /></div>
                                                 </div>
@@ -152,9 +154,9 @@ const Modal: React.FC<ModalProps> = ({ selectedFile,uploadedImage,text, content,
 
                                             {/* App Header */}
                                             <div className="bg-white px-4  flex items-center justify-between ">
-                                                <div className="w-10 h-10 bg-gray-100 rounded place-content-center place-items-center"><Settings className="text-black"/></div>
+                                                <div className="w-7 h-7 bg-gray-100 rounded place-content-center place-items-center"><Settings  strokeWidth={2} className="text-black w-5 h-5"/></div>
                                                 <span className="font-semibold text-lg  ">Le chiffre du jour</span>
-                                                <div className="w-10 h-10 bg-gray-100 rounded  place-content-center place-items-center"><BookmarkCheck strokeWidth={3} /></div>
+                                                <div className="w-7 h-7 bg-gray-100 rounded  place-content-center place-items-center"><BsFillBookmarkCheckFill  className='w-5 h-5'/></div>
                                             </div>
                                         </div>
 
@@ -193,9 +195,9 @@ const Modal: React.FC<ModalProps> = ({ selectedFile,uploadedImage,text, content,
 
                                             {/* Bottom Navigation */}
                                             <div className="bg-white px-4 py-3 flex justify-center space-x-8">
-                                                <div className="w-10 h-10 bg-gray-100 rounded  place-content-center place-items-center"><Bookmark strokeWidth={3} /></div>
-                                                 <div className="w-10 h-10 bg-gray-100 rounded  place-content-center place-items-center"><Megaphone strokeWidth={3} /></div>
-                                                 <div className="w-10 h-10 bg-gray-100 rounded  place-content-center place-items-center"><MessageCircle strokeWidth={3} /></div>
+                                                <div className="w-10 h-10 bg-gray-100 rounded  place-content-center place-items-center"><Bookmark strokeWidth={2} className='w-5 h-5'/></div>
+                                                 <div className="w-10 h-10 bg-gray-100 rounded  place-content-center place-items-center"><GrAnnounce  strokeWidth={2} className='w-5 h-5'/></div>
+                                                 <div className="w-10 h-10 bg-gray-100 rounded  place-content-center place-items-center"><MessageCircle strokeWidth={2} className='w-5 h-5'/></div>
                                             </div>
                                         </div>
                                     </div>

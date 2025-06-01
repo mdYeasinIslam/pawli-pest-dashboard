@@ -26,16 +26,15 @@ export default function HomeSection() {
   const [showStaticModal, setShowStaticModal] = useState(false)
 
   const [dragActive, setDragActive] = useState(false)
-  const [uploadedImage, setUploadedImage] = useState<string | null>(initialData?.imagePreview || null)
-  const [selectedFile, setSelectedFile] = useState<File | null>(null)
-  // console.log(uploadedImage)
-  // console.log( selectedFile)
+  const [uploadedImage, setUploadedImage] = useState<string | null>(initialData?.imagePreview || null) // State for uploaded image preview. ( can display the image preview in the UI by using this state variable)
+  const [selectedFile, setSelectedFile] = useState<File | null>(null) // State for the selected file. ( can display the image preview in the UI by using this state variable and when send image to the backend, you can use this state variable to send the file)
 
   // State for link and content text
   // These states will hold the text for the link and content areas
     const [linkText, setLinkText] = useState<string>("")
     const [contentText, setContentText] = useState<string>("")
     const [checkText, setCheckText] = useState<boolean>(false)
+  
   // Form state with proper TypeScript types
   const [formData, setFormData] = useState<Omit<PostData, "id" | "image" | "imagePreview">>({
     tooltipContent: initialData?.tooltipContent || "",
@@ -83,30 +82,6 @@ export default function HomeSection() {
             setCheckText(true)
         }
     }
-    
-//   const handleValidate = (): void => {
-//     const postData: PostData = {
-//       ...formData,
-//       image: selectedFile,
-//       imagePreview: uploadedImage,
-//     }
-//     // onSave?.(postData)
-//   }
-
-//   const handlePreview = (): void => {
-//     const postData: PostData = {
-//       ...formData,
-//       image: selectedFile,
-//       imagePreview: uploadedImage,
-//     }
-//     // onPreview?.(postData)
-//   }
-
-//   const handleClose = (): void => {
-//     // Handle close logic
-//     console.log("Closing post creator")
-//   }
-
     return (
       <section className="h-screen mt-8 ">
         <div className=" container mx-auto px-6 space-y-6 ">
@@ -176,7 +151,9 @@ export default function HomeSection() {
                     className={` text-white px-6 py-6 text-lg rounded-lg font-medium ${!checkText?'bg-red-500 hover:bg-red-600':'bg-green-500 hover:bg-green-600'}`}>{ !checkText?'Validate':'Modify'}</Button>
                 <Button
                      onClick={() => setShowPreviewModal(true)}
-                    className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-6 text-lg rounded-lg font-medium">
+                    className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-6 text-lg rounded-lg font-medium"
+                    disabled={!checkText || !uploadedImage || !linkText || !contentText ? true : false}      
+              >
                     Preview
                 </Button>
                 <Button onClick={() => setShowStaticModal(true)} className="bg-pink-400 hover:bg-pink-500 text-white px-6 py-6 text-lg rounded-lg font-medium">
