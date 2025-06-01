@@ -20,13 +20,19 @@ interface PostCreatorProps {
 export default function HomeSection() {
   // Define initialData as an empty object or with default values
   const initialData: Partial<PostData> = {}
+
+  //State for managing modal
   const [showPreviewModal, setShowPreviewModal] = useState(false)
   const [showStaticModal, setShowStaticModal] = useState(false)
 
   const [dragActive, setDragActive] = useState(false)
   const [uploadedImage, setUploadedImage] = useState<string | null>(initialData?.imagePreview || null)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
+  console.log(uploadedImage)
+  console.log( selectedFile)
 
+  // State for link and content text
+  // These states will hold the text for the link and content areas
     const [linkText, setLinkText] = useState<string>("")
     const [contentText, setContentText] = useState<string>("")
     const [checkText, setCheckText] = useState<boolean>(false)
@@ -50,7 +56,7 @@ export default function HomeSection() {
     [],
   )
 
-    console.log(linkText, contentText)
+    // console.log(linkText, contentText)
     
   const handleFileSelect = useCallback((file: File): void => {
     setSelectedFile(file)
@@ -116,7 +122,6 @@ export default function HomeSection() {
             <div className=" ">
                 <div className=" grid grid-cols-1 lg:grid-cols-3  gap-6 ">
                 {/* Left Column - Upload Area */}
-                  
                     <FileUpload
                         onFileSelect={handleFileSelect}
                         onFileRemove={handleFileRemove}
@@ -183,6 +188,7 @@ export default function HomeSection() {
             {/* Preview Modal */}
                 {showPreviewModal && (
                 <Modal 
+                uploadedImage={uploadedImage}
                 text={linkText}
                 content={contentText}    
                 setShowPreviewModal={setShowPreviewModal}/>

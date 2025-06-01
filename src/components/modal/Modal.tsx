@@ -5,12 +5,13 @@ import Image from 'next/image';
 import { toast } from 'sonner';
 
 interface ModalProps {
+    uploadedImage: string | null;
     text: string,
     content:string
     setShowPreviewModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Modal: React.FC<ModalProps> = ({ text, content, setShowPreviewModal }) => {
+const Modal: React.FC<ModalProps> = ({ uploadedImage,text, content, setShowPreviewModal }) => {
     
     const handlePostContent =  () => {
         // const postContent = {
@@ -63,7 +64,10 @@ const Modal: React.FC<ModalProps> = ({ text, content, setShowPreviewModal }) => 
                             <div className="flex justify-center space-x-8">
                                 {/* First Phone Mockup */}
                                 <div className="relative">
-                                    <div className="w-80 h-[550px] bg-black rounded-[2.5rem] p-2">
+                                    <div
+                                        className="w-80 h-[550px] bg-black rounded-[2.5rem] p-2"
+                                        
+                                    >
                                         <div className="flex flex-col justify-between w-full h-full bg-white rounded-[2rem] overflow-hidden px-2">
                                         <div className="space-y-2">
                                             {/* Phone Status Bar */}
@@ -86,7 +90,21 @@ const Modal: React.FC<ModalProps> = ({ text, content, setShowPreviewModal }) => 
                                         </div>
 
                                             {/* Content Area */}
-                                            <div className=" bg-black text-white p-4 h-[60%] place-content-center relative rounded-md">
+                                            <div 
+                                            
+                                            className=" bg-black text-white p-4 h-[60%] place-content-center relative rounded-md"
+                                             style={
+                                            uploadedImage
+                                                ? {
+                                                    backgroundImage: `url(${uploadedImage})`,
+                                                    backgroundSize: 'cover',
+                                                    backgroundPosition: 'center'
+                                                }
+                                                : {
+                                                    backgroundColor: '#f0f0f0'
+                                                }
+                                        }
+                                            >
                                                 <div className="absolute top-4 right-4">
                                                     <div className=" flex items-center justify-center"><Info strokeWidth={3} />
                                                        
