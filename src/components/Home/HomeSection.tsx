@@ -122,7 +122,7 @@ export default function HomeSection() {
                     <div className="flex flex-col justify-between lg:col-span-1 space-y-4 ">
                         <Textarea 
                             onChange={(e)=>setLinkText(e.target.value)}
-                           placeholder="Write here" 
+                           placeholder="Link here" 
                             value={linkText}
                             className="h-full border-gray-300 rounded-lg" />
                         <div className="flex flex-1 items-center h-full">
