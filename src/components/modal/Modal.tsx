@@ -41,7 +41,6 @@ const [loading, setLoading] = React.useState(false);
             });
 
             const resData = await res.json();
-            console.log(resData);
 
             if (res.ok) {
                 toast.success('Post content saved successfully!');

@@ -35,7 +35,6 @@ export default function HomeSection() {
   const [contentText, setContentText] = useState<string>("")
   const [checkText, setCheckText] = useState<boolean>(false)
 
-  // console.log(linkText, contentText)
     
   const handleFileSelect = useCallback((file: File): void => {
     setSelectedFile(file)
@@ -74,7 +73,6 @@ export default function HomeSection() {
   }
 
   useEffect(() => {
-    console.log(showPreviewModal)
     // setContentText('');  // Reset content text
     // setLinkText(''); // Reset link text
   },[showPreviewModal])
