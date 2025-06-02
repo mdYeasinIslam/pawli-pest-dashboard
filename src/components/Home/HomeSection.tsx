@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { useCallback, useState } from "react"
+import { use, useCallback, useEffect, useState } from "react"
 import {  ChevronRight} from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
@@ -31,31 +31,11 @@ export default function HomeSection() {
 
   // State for link and content text
   // These states will hold the text for the link and content areas
-    const [linkText, setLinkText] = useState<string>("")
-    const [contentText, setContentText] = useState<string>("")
-    const [checkText, setCheckText] = useState<boolean>(false)
-  
-  // Form state with proper TypeScript types
-  const [formData, setFormData] = useState<Omit<PostData, "id" | "image" | "imagePreview">>({
-    tooltipContent: initialData?.tooltipContent || "",
-    pushHeader: initialData?.pushHeader || "",
-    pushText: initialData?.pushText || "",
-    dailyNumber: initialData?.dailyNumber || "",
-    rightTextArea: initialData?.rightTextArea || "",
-    publishTime: initialData?.publishTime || "11 AM, July 1st, 2025",
-  })
+  const [linkText, setLinkText] = useState<string>("")
+  const [contentText, setContentText] = useState<string>("")
+  const [checkText, setCheckText] = useState<boolean>(false)
 
-  const handleInputChange = useCallback(
-    (field: keyof typeof formData) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      setFormData((prev) => ({
-        ...prev,
-        [field]: e.target.value,
-      }))
-    },
-    [],
-  )
-
-    // console.log(linkText, contentText)
+  // console.log(linkText, contentText)
     
   const handleFileSelect = useCallback((file: File): void => {
     setSelectedFile(file)
@@ -71,23 +51,40 @@ export default function HomeSection() {
     setSelectedFile(null)
   }, [])
 
-    //validate and preview functions can be implemented as needed
-    const handleValidate = (): void => {
-        if (!linkText.length || !contentText.length) {
-            setCheckText(false)
-            toast("Please fill in all fields before validating.")
-            return
-        }
-        else {
-            setCheckText(true)
-        }
+  //validate and preview functions can be implemented as needed
+  const handleValidate = (): void => {
+    if (!linkText.length || !contentText.length) {
+      setCheckText(false)
+      toast("Please fill in all fields before validating.")
+      return
     }
+    else {
+      setCheckText(true)
+    }
+  }
+  
+  const handleResetAfeterSavePost = () => {
+    
+   setShowPreviewModal(false); // Close the modal after successful post
+    setSelectedFile(null); // Reset selected file
+    setUploadedImage(null); // Reset uploaded image
+    setContentText('');  // Reset content text
+    setLinkText(''); // Reset link text
+    setCheckText(false); // Reset check text state
+  }
+
+  useEffect(() => {
+    console.log(showPreviewModal)
+    // setContentText('');  // Reset content text
+    // setLinkText(''); // Reset link text
+  },[showPreviewModal])
     return (
       <section className="h-screen mt-8 ">
         <div className=" container mx-auto px-6 space-y-6 ">
             {/* Header */}
-            <div className=" mx-auto  bg-black text-white px-6 py-3 flex items-center justify-between rounded-md ">
-                <span className="text-sm font-medium">Post n°1 - Time of publication: 11 AM, July 1st, 2025</span>
+          <div className=" mx-auto  bg-black text-white px-6 py-3 flex items-center justify-between rounded-md ">
+                <p></p>
+                <p className=" text-sm font-medium">Post n°1 - Time of publication: 11 AM, July 1st, 2025</p>
                 <button className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
                 <ChevronRight className="w-4 h-4 text-black" />
                 </button>
@@ -127,11 +124,13 @@ export default function HomeSection() {
                     <div className="flex flex-col justify-between lg:col-span-1 space-y-4 ">
                         <Textarea 
                             onChange={(e)=>setLinkText(e.target.value)}
-                            placeholder="Write here" 
+                           placeholder="Write here" 
+                            value={linkText}
                             className="h-full border-gray-300 rounded-lg" />
                         <div className="flex flex-1 items-center h-full">
                             <Textarea
                                 defaultValue="Le chiffre du jour"
+                                
                                 className="border-blue-300 border-2 flex items-center text-[30px]"
                                 readOnly
                                 style={{ height: "100%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px", fontWeight: "lighter" }}
@@ -140,6 +139,7 @@ export default function HomeSection() {
                             <Textarea 
                             onChange={(e)=>setContentText(e.target.value)}
                             placeholder="Write here" 
+                             value={contentText}
                             className="h-full border-gray-300 rounded-lg" />
                     </div>
                 </div>
@@ -163,13 +163,15 @@ export default function HomeSection() {
             </div>
             
             {/* Preview Modal */}
-                {showPreviewModal && (
-                <Modal 
-                selectedFile={selectedFile}
-                uploadedImage={uploadedImage}
-                text={linkText}
-                content={contentText}    
-                setShowPreviewModal={setShowPreviewModal}/>
+          {showPreviewModal && (
+            <Modal
+              selectedFile={selectedFile}
+              uploadedImage={uploadedImage}
+              text={linkText}
+              content={contentText}    
+              setShowPreviewModal={setShowPreviewModal}
+              handleResetAfeterSavePost={handleResetAfeterSavePost}
+            />
                 )}
                 {showStaticModal && (
                     <StatisticsModal

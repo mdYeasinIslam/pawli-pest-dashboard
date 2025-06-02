@@ -1,9 +1,10 @@
 import React from 'react'
 import { Button } from '../ui/button'
-import { BatteryFull, Bookmark, BookmarkCheck, Check, CheckCircle, Info, Megaphone, MessageCircle, Settings, SignalHigh, Wifi, X } from 'lucide-react'
+import { BatteryFull, Bookmark, Info, MessageCircle, Settings, SignalHigh, Wifi, X } from 'lucide-react'
 import { toast } from 'sonner';
 import { BsFillBookmarkCheckFill } from 'react-icons/bs';
 import { GrAnnounce } from 'react-icons/gr';
+import LoadingSpinner from '@/app/loading';
 
 interface ModalProps {
     selectedFile: File | null;
@@ -11,46 +12,67 @@ interface ModalProps {
     text: string,
     content:string
     setShowPreviewModal: React.Dispatch<React.SetStateAction<boolean>>;
+    handleResetAfeterSavePost: () => void;
 }
 
-const Modal: React.FC<ModalProps> = ({ selectedFile,uploadedImage,text, content, setShowPreviewModal }) => {
-    
-    const handlePostContent = () => {
-        
+const Modal: React.FC<ModalProps> = ({ selectedFile,uploadedImage,text, content, setShowPreviewModal,handleResetAfeterSavePost}) => {
+const [loading, setLoading] = React.useState(false);
+  
+    const handlePostContent = async () => {
         if (!selectedFile) return;
 
-        const formData = new FormData();
-         const data = {
+        setLoading(true); //  Start spinner before API call
+
+        try {
+            const formData = new FormData(); // Create a new FormData object to hold the data for the POST request
+            const data = {
             content,
             link: text,
-            status: 'PENDING', // or 'CURRENT' if you want
-            scheduledAt: new Date().toISOString(), // add this only if required by backend
-        };
+            status: 'PENDING',
+            scheduledAt: new Date().toISOString(),
+            };
 
-        formData.append('data', JSON.stringify(data)); // 🟡 send the data field as a JSON string
-        formData.append('images', selectedFile); // ✅ exact key 'images' as per backend
-         fetch('https://paulinefst.onrender.com/api/v1/posts', {
+            formData.append('data', JSON.stringify(data));
+            formData.append('images', selectedFile);
+
+            const res = await fetch('https://paulinefst.onrender.com/api/v1/posts', {
             method: 'POST',
-           
-             body: formData, // Use FormData to send the file
-         }).then((response) => response.json())
-             .then((data) => {
-                 if (data && data.success) {
-                     toast.success('Post content saved successfully!');
-                 }
-        }
-        )
-        .catch((error) => {
-            console.error('Error saving post content:', error);
-        });
+            body: formData,
+            });
 
-    }
+            const resData = await res.json();
+            console.log(resData);
+
+            if (res.ok) {
+                toast.success('Post content saved successfully!');
+                handleResetAfeterSavePost(); // Reset the form after successful post
+            
+            } else {
+            toast.error(`Error: ${resData.message || 'Unknown error'}`);
+            }
+        } catch (error) {
+            console.error('API error:', error);
+            toast.error('An unexpected error occurred.');
+        } finally {
+            setLoading(false); //  Always stop loading
+        }
+    };
     return (
-         <div className="fixed inset-0 bg-[#180E25]/50 backdrop-blur-sm flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-[#180E25]/50 backdrop-blur-sm flex items-center justify-center z-50">
+            {/* Modal Container */}
+            {
+                loading ? (
+                    <div className="">
+                        <LoadingSpinner />
+                    </div>
+                ) :
+                    (
+
                     <div className=" rounded-lg shadow-xl max-w-4xl w-full mx-4 overflow-hidden">
                         {/* Modal Header */}
-                        <div className="bg-black text-white px-6 py-3 flex items-center justify-between">
-                            <span className="text-sm font-medium">Post n°1 - Time of publication: 11 AM, July 1st, 2025</span>
+                <div className="bg-black text-white px-6 py-3 flex items-center justify-between">
+                             <p></p>
+                            <p className=" text-sm font-medium">Post n°1 - Time of publication: 11 AM, July 1st, 2025</p>
                             <button
                                 className="w-6 h-6 bg-white rounded-full flex items-center justify-center"
                                 onClick={() => setShowPreviewModal(false)}
@@ -216,6 +238,8 @@ const Modal: React.FC<ModalProps> = ({ selectedFile,uploadedImage,text, content,
                             </div>
                         </div>
                     </div>
+                    )
+            }
                 </div>
     )
 }
