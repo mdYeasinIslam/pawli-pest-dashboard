@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { laila, openSans } from "@/fonts/fonts";
+import { laila, openSans, urbanist } from "@/fonts/fonts";
 import { Suspense } from "react";
 import Loading from "@/components/Others/Loading";
 import { Toaster } from "sonner";
@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${openSans.variable} ${laila.variable}`}
+        className={`${openSans.variable} ${laila.variable} ${urbanist.variable}`}
       >
         <Toaster position="top-center" expand={true} richColors />
         <Suspense fallback={<Loading />}>

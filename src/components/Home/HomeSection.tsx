@@ -2,7 +2,7 @@
 
 import type React from "react"
 import { use, useCallback, useEffect, useState } from "react"
-import {  ChevronRight} from "lucide-react"
+import {  ChevronRight, Link, Type} from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import Modal from "../modal/Modal"
@@ -10,6 +10,10 @@ import { FileUpload } from "../file-upload/fill-upload"
 import { PostData } from "@/Types/post"
 import  { StatisticsModal } from "../modal/StaticModal"
 import { toast } from "sonner"
+import { Label } from "../ui/label"
+import { Input } from "../ui/input"
+import SheduleSection from "./SheduleSection"
+import DateTime from "./DateTime"
 interface PostCreatorProps {
   initialData?: Partial<PostData>
   onSave?: (data: PostData) => void
@@ -90,72 +94,139 @@ export default function HomeSection() {
 
             {/* Main Content */}
             <div className=" ">
-                <div className=" grid grid-cols-1 lg:grid-cols-3  gap-6 ">
+                <div className=" grid grid-cols-1 lg:grid-cols-5  gap-10 ">
                 {/* Left Column - Upload Area */}
-                    <FileUpload
-                        onFileSelect={handleFileSelect}
-                        onFileRemove={handleFileRemove}
-                        uploadedImage={uploadedImage}
-                        dragActive={dragActive}
-                        onDragStateChange={setDragActive}
-                    />
+                    <div className="col-span-2">
+                      
+                      <FileUpload
+                          onFileSelect={handleFileSelect}
+                          onFileRemove={handleFileRemove}
+                          uploadedImage={uploadedImage}
+                          dragActive={dragActive}
+                          onDragStateChange={setDragActive}
+                      />
+                    </div>
 
                     {/* Center Column - Notification Blocks */}
-                    <div className="lg:col-span-1 space-y-4">
-                        {/* Tooltip Content */}
+                    {/* <div className="lg:col-span-1 space-y-4">
                         <div className="bg-[#156082] text-white rounded-lg h-48 text-center place-content-center ">
                         <span className="font-medium">Tooltip content</span>
                         </div>
 
-                        {/* Push Notification Header */}
                         <div className="bg-[#00B0F0] text-white rounded-lg h-48 text-center place-content-center">
                         <span className="font-medium">Push notification header</span>
                         </div>
 
-                        {/* Push Notification Text */}
                         <div className="bg-[#00B0F0] text-white rounded-lg h-48 text-center place-content-center">
                         <span className="font-medium">Push notification text</span>
                         </div>
-                    </div>
+                    </div> */}
 
                     {/* Right Column - Text Areas */}
-                    <div className="flex flex-col justify-between lg:col-span-1 space-y-4 ">
-                        <Textarea 
-                            onChange={(e)=>setLinkText(e.target.value)}
-                           placeholder="Link here" 
-                            value={linkText}
-                            className="h-full border-gray-300 rounded-lg" />
-                        <div className="flex flex-1 items-center h-full">
-                            <Textarea
-                                defaultValue="Le chiffre du jour"
-                                
-                                className="border-blue-300 border-2 flex items-center text-[30px]"
-                                readOnly
-                                style={{ height: "100%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px", fontWeight: "lighter" }}
-                            />
+                    <div className="space-y-5 col-span-3">
+                      
+                        <div className="space-y-7   ">
+                            {/* <div className="h-full">
+                              <label htmlFor="toltip" className="text-3xl font-semibold font-urbanist">Tooltip content</label>
+                              <Textarea 
+                                id="toltip"
+                                onChange={(e)=>setLinkText(e.target.value)}
+                                placeholder="Link here" 
+                                value={linkText}
+                                className="h-full border-gray-300 rounded-lg" />
+                              
+                            </div>
+                            
+                            <div className="h-full">
+                              <label htmlFor="push" className="text-3xl font-semibold font-urbanist">Push notification header</label>
+                                <Textarea
+                                    defaultValue="Le chiffre du jour"
+                                    id="push"
+                                    className="border-blue-300 border-2  text-[20px]"
+                                    readOnly
+                                    style={{  fontSize: "20px", fontWeight: "lighter" }}
+                                />
+                            </div>
+                            <div className="h-full">
+                              <label htmlFor="content" className="text-3xl font-semibold font-urbanist">Push notification text</label>
+                                <Textarea 
+                                id="content"
+                                onChange={(e)=>setContentText(e.target.value)}
+                                placeholder="Write here" 
+                                value={contentText}
+                                className="h-full border-gray-300 rounded-lg" />
+                            </div> */}
+                            <div className="space-y-3">
+                                <Label className=" text-[28px] font-semibold font-urbanist">Tooltip content</Label>
+                                <div className="relative">
+                                  <Textarea
+                                    placeholder="Write here"
+                                    value={linkText}
+                                     onChange={(e)=>setLinkText(e.target.value)}
+                                    className="min-h-[80px] h-[130px] pr-16 resize-none border-gray-200 focus:border-gray-300 focus:ring-1 focus:ring-gray-300"
+                                  />
+                                  <div className="absolute top-3 right-3 flex gap-2">
+                                    <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-gray-400 hover:text-gray-600">
+                                      <Link className="h-4 w-4" />
+                                    </Button>
+                                    <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-gray-400 hover:text-gray-600">
+                                      <Type className="h-4 w-4" />
+                                    </Button>
+                                  </div>
+                                </div>
+                              </div>
+
+                              {/* Push notification header section */}
+                              <div className="space-y-3">
+                                <Label className="text-[28px] font-semibold font-urbanist">Push notification header</Label>
+                                <Input
+                                  defaultValue="Le chiffre du jour"
+                                  readOnly
+                                  className="h-[70px] border-gray-200 focus:border-gray-300 focus:ring-1 focus:ring-gray-300"
+                                />
+                              </div>
+
+                              {/* Push notification text section */}
+                              <div className="space-y-3">
+                                <Label className="text-[28px] font-semibold font-urbanist">Push notification text</Label>
+                                <div className="relative">
+                                  <Textarea
+                                    placeholder="Write here"
+                                    onChange={(e)=>setContentText(e.target.value)}
+                                    value={contentText}
+                                    className="min-h-[100px] h-[130] pr-8 resize-none border-gray-200 focus:border-gray-300 focus:ring-1 focus:ring-gray-300"
+                                  />
+                                  <div className="absolute bottom-3 right-3">
+                                    <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-gray-400 hover:text-gray-600">
+                                      <Type className="h-4 w-4" />
+                                    </Button>
+                                  </div>
+                                </div>
+                              </div>
                         </div>
-                            <Textarea 
-                            onChange={(e)=>setContentText(e.target.value)}
-                            placeholder="Write here" 
-                             value={contentText}
-                            className="h-full border-gray-300 rounded-lg" />
+                        {/* Schedule section */}
+                        <SheduleSection/>
+                        {/* Date and Time section */}
+                        <DateTime/>
                     </div>
                 </div>
-
                 {/* Action Buttons */}
                 <div className=" flex justify-end space-x-4 mt-8">
                 <Button
                     onClick={handleValidate}
-                    className={` text-white px-6 py-6 text-lg rounded-lg font-medium ${!checkText?'bg-red-500 hover:bg-red-600':'bg-green-500 hover:bg-green-600'}`}>{ !checkText?'Validate':'Modify'}</Button>
+                    className={` text-white px-6 py-6 text-lg rounded-lg font-medium ${!checkText?'bg-[#FF0000] hover:bg-red-600':'bg-green-500 hover:bg-green-600'}`}>{ !checkText?'Validate':'Modify'}</Button>
                 <Button
                      onClick={() => setShowPreviewModal(true)}
-                    className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-6 text-lg rounded-lg font-medium"
+                    className="bg-[#7030A0] hover:bg-purple-700 text-white px-6 py-6 text-lg rounded-lg font-medium"
                     disabled={!checkText || !uploadedImage || !linkText || !contentText ? true : false}      
               >
                     Preview
                 </Button>
                 <Button onClick={() => setShowStaticModal(true)} className="bg-pink-400 hover:bg-pink-500 text-white px-6 py-6 text-lg rounded-lg font-medium">
                     Statistics
+                </Button>
+                <Button onClick={() => setShowStaticModal(true)} className="bg-black  hover:bg-pink-500 text-white px-6 py-6 text-lg rounded-lg font-medium">
+                    Save Post
                 </Button>
                 </div>
             </div>

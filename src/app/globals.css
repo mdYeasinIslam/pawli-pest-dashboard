@@ -60,6 +60,9 @@ body {
 .font-laila {
   font-family: var(--font-laila);
 }
+.font-urbanist {
+  font-family: var(--font-laila);
+}
 
 @theme {
   /* --breakpoint-*: initial; */
