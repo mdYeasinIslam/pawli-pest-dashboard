@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from 'react'
 import { Label } from '../ui/label'
-import { Calendar as CalendarComponent } from "@/components/ui/calendar"
+// import { Calendar as CalendarComponent } from "@/components/ui/calendar"
 import {  CalendarIcon, Clock } from 'lucide-react'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { Button } from '../ui/button'
@@ -39,12 +39,12 @@ const DateTime = () => {
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0" align="start">
-              <CalendarComponent
+              {/* <CalendarComponent
                 mode="single"
                 selected={date}
                 onSelect={(newDate) => newDate && setDate(newDate)}
                 initialFocus
-              />
+              /> */}
             </PopoverContent>
           </Popover>
         </div>
