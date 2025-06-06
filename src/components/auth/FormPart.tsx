@@ -13,7 +13,7 @@ const FormPart = ({ handleSubmit, togglePasswordVisibility, showPassword, page }
     
 
   return (
-     <form onSubmit={handleSubmit} className=" space-y-8">
+     <form onSubmit={handleSubmit} className=" space-y-7">
                             {/* Email Input */}
                             <div className="w-full">
                                 <label htmlFor="email" className="block text-sm font-medium text-gray-700">
