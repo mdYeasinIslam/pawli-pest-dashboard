@@ -16,7 +16,7 @@ const DateTime = () => {
   const formatTime = (hour: string, minute: string, period: string) => {
     return `${hour}:${minute} ${period}`
   }
-  console.log(date,time)
+  // console.log(date,time)
   const hours = Array.from({ length: 12 }, (_, i) => (i + 1).toString())
   const minutes = Array.from({ length: 60 }, (_, i) => i.toString().padStart(2, "0"))
   return (

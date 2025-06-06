@@ -22,18 +22,18 @@ const pendingPosts = Array(10)
 
 export default function PendingPosts() {
   const param = usePathname()
-  console.log(param.split('/'))
+  // console.log(param.split('/'))
   const pageName =param.split('/')
   const [posts] = useState(pendingPosts)
   const [openModal, setOpenModal] = useState<number | null>(null)
 
   const handleModifyPost = (postId: number) => {
-    console.log("Modify post:", postId)
+    // console.log("Modify post:", postId)
     setOpenModal(null)
   }
 
   const handleDeletePost = (postId: number) => {
-    console.log("Delete post:", postId)
+    // console.log("Delete post:", postId)
     setOpenModal(null)
   }
 
