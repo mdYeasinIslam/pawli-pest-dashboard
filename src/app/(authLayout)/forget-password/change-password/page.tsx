@@ -19,8 +19,13 @@ const page = () => {
      const router = useRouter();
     // State to manage password visibility
     const [showPassword, setShowPassword] = useState(false);
+    const [showPasswordSecond, setShowPasswordSecond] = useState(false);
     const togglePasswordVisibility = () => {
         setShowPassword((prev) => !prev);
+    }
+    const togglePasswordVisibilityForSecond = () => {
+        setShowPasswordSecond((prev) => !prev);
+
     }
 
     
@@ -101,10 +106,10 @@ const page = () => {
                                   <label htmlFor="password"  className="block text-sm font-medium text-gray-700">
                                      New Password
                                   </label>
-                                  <div onClick={togglePasswordVisibility} className="absolute right-3 top-9 text-gray-500 cursor-pointer z-10">
+                                  <div onClick={togglePasswordVisibilityForSecond} className="absolute right-3 top-9 text-gray-500 cursor-pointer z-10">
 
                                       {
-                                          showPassword ? (
+                                          showPasswordSecond ? (
                                               <EyeOff />
                                           ) : (
                                               <Eye  />
@@ -112,23 +117,23 @@ const page = () => {
                                       }
                                   </div>
                                   <input
-                                      type={showPassword ? "text" : "password"}
-                                      id="password"
-                                    name="password"
-                                    required
-                                      className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                                      placeholder="Enter your password"
+                                        type={showPasswordSecond ? "text" : "password"}
+                                        id="password"
+                                        name="password"
+                                        required
+                                        className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                                        placeholder="Enter your password"
                                   />
                               </div>
                             
                             {/* Submit Button */}
-                            <Link href={'/'}>
+                            
                              <button
                                 type="submit"
                                 className="w-full bg-black text-white py-5 px-4 rounded-xl hover:bg-green-600 transition duration-300 cursor-pointer"
                             >
                                 Save Password
-                            </button></Link>
+                            </button>
                         </form>
 
                     </div>
