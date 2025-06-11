@@ -36,12 +36,19 @@ const LoginPage = () => {
             loginUser({ email, password })
             .unwrap()
             .then((response) => {
-                    console.log("Login successful:", response);
+                    console.log("Login successful:", response?.data?.role);
                     if (response?.success) { 
-                        localStorage.setItem("token", response?.data?.token);
-                        toast.success(response?.message);
-                        dispatch(setToken(response?.data?.token));
-                        router.push('/');
+                        if (response?.data?.role ==='ADMIN') {
+                            localStorage.setItem("token", response?.data?.token);
+                            dispatch(setToken(response?.data?.token));
+                            toast.success(response?.message + ' as Admin');
+                            router.push('/');
+                        }
+                        else {
+                            
+                            toast.error( `You role is ${response?.data?.role}!! You don't have permission to access Dashboard`);
+                            router.push('/error-page')
+                        }
                     } 
                 })
                 .catch((error) => {

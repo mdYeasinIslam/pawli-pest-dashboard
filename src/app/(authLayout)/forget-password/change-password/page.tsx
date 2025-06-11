@@ -1,21 +1,25 @@
 'use client';
 import React, { FormEvent, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
-import Image from "next/image";
-// import { useAppDispatch } from "@/redux/hooks";
-// import { useLoginUserMutation } from "@/redux/services/auth/authApi";
-// import { setToken } from "@/redux/services/auth/authSlice";
 import {  redirect, useRouter } from "next/navigation";
 import { toast } from "sonner";
-import HeaderPart from "@/components/auth/HeaderPart";
-import FormPart from "@/components/auth/FormPart";
-import Link from "next/link";
+import { useUpdatePasswordMutation } from "@/redux/services/Api/auth/authApi";
+import { jwtDecode } from "jwt-decode";
+
+
+interface JwtPayload {
+  id: string;
+  email: string;
+  role: string;
+  iat: number;
+  exp: number;
+}
 
 const page = () => {
     // Importing the useAppDispatch hook to dispatch actions
     // const dispatch = useAppDispatch()
     // Using the loginUser mutation from authApi
-    // const [loginUser] = useLoginUserMutation()
+    const [updatePassword] = useUpdatePasswordMutation()
      const router = useRouter();
     // State to manage password visibility
     const [showPassword, setShowPassword] = useState(false);
@@ -28,40 +32,41 @@ const page = () => {
 
     }
 
-    
     const handleSubmit = (e: FormEvent<HTMLFormElement | undefined>) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
-        const email = formData.get("email");
-        const password = formData.get("password");
-        // console.log(email, password);
-        toast.success('Password saved successfully')
-        redirect('/')
-    //    try {
-    //         if(!email || !password) {
-    //            return toast.error("Email and password are required");
-    //        }
-    //         // Dispatching the loginUser mutation with email and password
-    //         loginUser({ email, password })
-    //             .unwrap()
-    //             .then((response) => {
-    //                 console.log("Login successful:", response);
-    //                 if (response?.success) { 
-    //                     localStorage.setItem("token", response?.data?.token);
-    //                     toast.success(response?.message);
-    //                     dispatch(setToken(response?.data?.token));
-                       
-    //                     router.push('/');
-    //                 } 
-    //             })
-    //             .catch((error) => {
-    //                 console.error("Login failed inside:", error);
-    //                 toast.error(error?.data?.message +'inside' || "Login failed inside");
-    //             });
+        const newPassword = formData.get("newPassword");
+        const confirmPassword = formData.get("confirmPassword");
+
+        //get token and decode it through jwtDecode
+        const token = localStorage.getItem('token') || ''
+        const decode = jwtDecode<JwtPayload>(token)
+        const email = decode.email
+        console.log(newPassword,confirmPassword,email)
+       try {
+            if(!confirmPassword || !newPassword) {
+               return toast.error("password are required");
+           }
+            // Dispatching the loginUser mutation with email and password
+            updatePassword({ email, password:confirmPassword })
+                .unwrap()
+                .then((response) => {
+                    console.log("Password Updated successfully", response);
+                    if (response?.success) { 
+                        toast.success(response?.message);
+                        // dispatch(setToken(response?.data?.token));
+                        localStorage.removeItem('token')
+                        router.push('/signIn');
+                    } 
+                })
+                .catch((error) => {
+                    console.error("Password Updated error inside:", error);
+                    toast.error(error?.data?.message);
+                });
            
-    //    } catch (error) {
-    //     console.error("Login failed outside:", error);
-    //    }
+       } catch (error) {
+        console.error("Password Updated error outside:", error);
+       }
     };
 
     return (
@@ -80,8 +85,8 @@ const page = () => {
                         <form onSubmit={handleSubmit} className=" space-y-10">
                             {/* Email Input */}
                              <div className=" relative">
-                                  <label htmlFor="password"  className="block text-sm font-medium text-gray-700">
-                                     Old Password
+                                  <label htmlFor="newPassword"  className="block text-sm font-medium text-gray-700">
+                                     New Password
                                   </label>
                                   <div onClick={togglePasswordVisibility} className="absolute right-3 top-9 text-gray-500 cursor-pointer z-10">
 
@@ -95,16 +100,16 @@ const page = () => {
                                   </div>
                                   <input
                                       type={showPassword ? "text" : "password"}
-                                      id="password"
-                                    name="password"
+                                      id="newPassword"
+                                    name="newPassword"
                                     required
                                       className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                                       placeholder="Enter your password"
                                   />
                               </div>
                               <div className=" relative">
-                                  <label htmlFor="password"  className="block text-sm font-medium text-gray-700">
-                                     New Password
+                                  <label htmlFor="confirmPassword"  className="block text-sm font-medium text-gray-700">
+                                     Confirm Password
                                   </label>
                                   <div onClick={togglePasswordVisibilityForSecond} className="absolute right-3 top-9 text-gray-500 cursor-pointer z-10">
 
@@ -118,8 +123,8 @@ const page = () => {
                                   </div>
                                   <input
                                         type={showPasswordSecond ? "text" : "password"}
-                                        id="password"
-                                        name="password"
+                                        id="confirmPassword"
+                                        name="confirmPassword"
                                         required
                                         className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                                         placeholder="Enter your password"

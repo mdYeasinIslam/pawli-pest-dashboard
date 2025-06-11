@@ -10,7 +10,6 @@ type FormPartProps = {
 };
 
 const FormPart = ({ handleSubmit, togglePasswordVisibility, showPassword, page }: FormPartProps) => {
-    
 
   return (
      <form onSubmit={handleSubmit} className=" space-y-7">
@@ -57,12 +56,13 @@ const FormPart = ({ handleSubmit, togglePasswordVisibility, showPassword, page }
             </div>
         }
 
-            <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between mb-6">
             <div className="flex items-center">
-            <input type="checkbox" id="remember-me" name="remember-me" className="mr-2"/>
-            <label htmlFor="remember-me" className="text-sm text-gray-600">Remember me</label>
+                <input type="checkbox" id="remember-me" name="remember-me" className="mr-2"/>
+                <label htmlFor="remember-me" className="text-sm text-gray-600">Remember me</label>
             </div>
-            <Link href="/forget-password" className="text-sm text-blue-500">Forgot password?</Link>
+            
+            <Link href={'/forget-password'} className="text-sm text-blue-500 cursor-pointer hover:underline">Forgot password?</Link>
         </div>
         {/* Submit Button */}
         <button
