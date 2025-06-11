@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useRef, type DragEvent, type ChangeEvent } from "react"
+import { useRef, type DragEvent, type ChangeEvent, useState } from "react"
 import { Upload, X } from "lucide-react"
 import { FileUploadProps } from "@/Types/post"
 
@@ -10,25 +10,26 @@ export function FileUpload({
   onFileSelect,
   onFileRemove,
   uploadedImage,
-  dragActive,
-  onDragStateChange,
+  // dragActive,
+  // setDragActive,
 }: FileUploadProps) {
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const [dragActive, setDragActive] = useState(false)
 
   const handleDrag = (e: DragEvent<HTMLDivElement>): void => {
     e.preventDefault()
     e.stopPropagation()
     if (e.type === "dragenter" || e.type === "dragover") {
-      onDragStateChange(true)
+      setDragActive(true)
     } else if (e.type === "dragleave") {
-      onDragStateChange(false)
+      setDragActive(false)
     }
   }
 
   const handleDrop = (e: DragEvent<HTMLDivElement>): void => {
     e.preventDefault()
     e.stopPropagation()
-    onDragStateChange(false)
+    setDragActive(false)
 
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       handleFile(e.dataTransfer.files[0])
@@ -46,7 +47,8 @@ export function FileUpload({
     const allowedTypes = ["image/jpeg", "image/jpg", "image/png"]
     if (allowedTypes.includes(file.type)) {
       onFileSelect(file)
-    } else {
+    }
+    else {
       alert("Please upload only .jpeg or .png files")
     }
   }

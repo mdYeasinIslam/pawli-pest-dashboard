@@ -1,0 +1,110 @@
+'use client'
+import React, { useRef, useState } from 'react'
+import { Label } from '../ui/label'
+import JoditEditor from './jodit-editor/JoditEditorClient'
+
+
+
+
+const linkStyles = `
+  .jodit-wysiwyg a,
+  .jodit-container a {
+    color: #2563eb !important;
+    font-weight:bold;
+    text-decoration: underline !important;
+  }
+  
+  .jodit-wysiwyg a:hover,
+  .jodit-container a:hover {
+    color: #1d4ed8 !important;
+    text-decoration: underline !important;
+  }
+  
+  /* Preview area link styles */
+  .preview-content a {
+    color: #2563eb;
+    text-decoration: underline;
+  }
+  
+  .preview-content a:hover {
+    color: #1d4ed8;
+  }`
+
+type Prop = {
+    linkText: string,
+    setLinkText: React.Dispatch<React.SetStateAction<string>>
+}
+
+const TooltipContent = ({ linkText, setLinkText }: Prop) => {
+    
+      const editor = useRef(null)
+//   const [content, setContent] = useState("")
+
+  const config = {
+        readonly: false,
+        placeholder: "Write here...",
+        height: 100,
+        toolbar: true,
+        buttons: ["link"],
+        buttonsMD: ["link"],
+        buttonsSM: ["link"],
+        buttonsXS: ["link"],
+        showCharsCounter: false,
+        showWordsCounter: false,
+        showXPathInStatusbar: false,
+        askBeforePasteHTML: false,
+        askBeforePasteFromWord: false,
+        // defaultActionOnPaste: InsertMode.INSERT_CLEAR_HTML, // or just remove
+        cleanHTML: {
+            timeout: 300,
+        },
+        link: {
+            followOnDblClick: false,
+            processVideoLink: false,
+            processPastedLink: true,
+            openInNewTabCheckbox: true,
+            noFollowCheckbox: false,
+            modeClassName: "input" as "input",
+        },
+        extraCSS: linkStyles,
+        iframe: false,
+        iframeStyle: linkStyles,
+}
+  return (
+    <div className="space-y-3">
+        <div className="relative">
+        <Label className=" text-[28px] font-semibold font-urbanist">Tooltip content</Label>
+            {/* <Textarea
+            placeholder="Write here"
+            value={linkText}
+            required
+                onChange={(e)=>setLinkText(e.target.value)}
+            className="min-h-[80px] h-[130px] pr-16 resize-none border-gray-200 focus:border-gray-300 focus:ring-1 focus:ring-gray-300"
+            /> */}
+                    <style dangerouslySetInnerHTML={{ __html: linkStyles }} />
+
+              <div className=''>
+                  
+                <JoditEditor
+                        ref={editor}
+                        value={linkText}
+                        config={config}
+                        tabIndex={1}
+                        onBlur={(newContent) => setLinkText(newContent)}
+                        onChange={(newContent) => {}}
+                    />
+              </div>
+            {/* <div className="absolute top-3 right-3 flex gap-2">
+            <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-gray-400 hover:text-gray-600">
+                <Link className="h-4 w-4" />
+            </Button>
+            <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-gray-400 hover:text-gray-600">
+                <Type className="h-4 w-4" />
+            </Button>
+            </div> */}
+        </div>
+    </div>
+  )
+}
+
+export default TooltipContent

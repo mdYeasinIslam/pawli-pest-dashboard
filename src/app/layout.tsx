@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { laila, openSans, urbanist } from "@/fonts/fonts";
 import { Suspense } from "react";
 import Loading from "@/components/Others/Loading";
 import { Toaster } from "sonner";
-import { Provider } from "react-redux";
-import { store } from "@/redux/store/store";
+import { Providers } from "@/redux/Providers";
 
 export const metadata: Metadata = {
   title: "Pawle-pest",
@@ -18,18 +16,22 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+
+  
   return (
     <html lang="en">
       <body
         className={`${openSans.variable} ${laila.variable} ${urbanist.variable}`}
       >
-        <Provider store={store}>
+        {/* redux provider */}
+        <Providers>
           <Toaster position="top-center" expand={true} richColors />
           <Suspense fallback={<Loading />}>
             {children}
           </Suspense>
+        </Providers>
           
-        </Provider>
       </body>
     </html>
   );

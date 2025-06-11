@@ -1,27 +1,53 @@
 'use client'
 import React, { useState } from 'react'
 import { Label } from '../ui/label'
-// import { Calendar as CalendarComponent } from "@/components/ui/calendar"
 import {  CalendarIcon, Clock } from 'lucide-react'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { Button } from '../ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 import { format } from 'date-fns'
 import { cn } from '@/lib/utils'
+import { Calendar } from '../ui/calendar'
 
-const DateTime = () => {
-   const [date, setDate] = useState<Date>(new Date()) // May 22, 2025
+type PropType = {
+  setPostTime?: React.Dispatch<React.SetStateAction<string>>
+  setPostDate?: React.Dispatch<React.SetStateAction<string>>
+  getDateAndTime: (date: string, time: string) => void
+}
+
+const DateTime = ({ getDateAndTime }: PropType) => {
+  const [date, setDate] = useState<Date>(new Date())
   const [time, setTime] = useState({ hour: "10", minute: "30", period: "AM" })
 
   const formatTime = (hour: string, minute: string, period: string) => {
     return `${hour}:${minute} ${period}`
   }
-  // console.log(date,time)
+  // Format date as 2025-05-30
+  const formattedDate = date
+    ? `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`
+    : '';
+  // Format time as 04:06 (24-hour format)
+  // Convert 12-hour time to 24-hour format
+  const hour24 =
+    time.period === "AM"
+      ? time.hour === "12"
+        ? "00"
+        : time.hour.padStart(2, "0")
+      : time.hour === "12"
+        ? "12"
+        : (parseInt(time.hour, 10) + 12).toString().padStart(2, "0");
+  const formattedTime = `${hour24}:${time.minute}`;
+
+  React.useEffect(() => {
+    getDateAndTime(formattedDate, formattedTime)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formattedDate, formattedTime])
+
   const hours = Array.from({ length: 12 }, (_, i) => (i + 1).toString())
   const minutes = Array.from({ length: 60 }, (_, i) => i.toString().padStart(2, "0"))
   return (
-      <>
-        {/* Date and Time section */}
+    <>
+      {/* Date and Time section */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-3">
           <Label className="text-xl font-medium text-gray-900">Date</Label>
@@ -39,12 +65,14 @@ const DateTime = () => {
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0" align="start">
-              {/* <CalendarComponent
+              <Calendar
                 mode="single"
+                required={true}
                 selected={date}
-                onSelect={(newDate) => newDate && setDate(newDate)}
-                initialFocus
-              /> */}
+                onSelect={setDate}
+                className="rounded-md border shadow-sm"
+                captionLayout="dropdown"
+              />
             </PopoverContent>
           </Popover>
         </div>
@@ -102,7 +130,7 @@ const DateTime = () => {
           </Popover>
         </div>
       </div>
-      </>
+    </>
   )
 }
 

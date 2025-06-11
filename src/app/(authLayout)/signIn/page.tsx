@@ -1,20 +1,17 @@
 'use client';
 import React, { FormEvent, useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
-import Image from "next/image";
-// import { useAppDispatch } from "@/redux/hooks";
-// import { useLoginUserMutation } from "@/redux/services/auth/authApi";
-// import { setToken } from "@/redux/services/auth/authSlice";
-import {  redirect, useRouter } from "next/navigation";
+import {  useRouter } from "next/navigation";
 import { toast } from "sonner";
-import HeaderPart from "@/components/auth/HeaderPart";
 import FormPart from "@/components/auth/FormPart";
+import { useAppDispatch } from "@/redux/hooks";
+import { useLoginUserMutation } from "@/redux/services/Api/auth/authApi";
+import { setToken } from "@/redux/services/Api/auth/authSlice";
 
 const LoginPage = () => {
     // Importing the useAppDispatch hook to dispatch actions
-    // const dispatch = useAppDispatch()
+    const dispatch = useAppDispatch()
     // Using the loginUser mutation from authApi
-    // const [loginUser] = useLoginUserMutation()
+    const [loginUser] = useLoginUserMutation()
      const router = useRouter();
     // State to manage password visibility
     const [showPassword, setShowPassword] = useState(false);
@@ -28,34 +25,33 @@ const LoginPage = () => {
         const formData = new FormData(e.currentTarget);
         const email = formData.get("email");
         const password = formData.get("password");
-        console.log(email, password);
-        toast.success('Login successfull')
-        redirect('/')
-    //    try {
-    //         if(!email || !password) {
-    //            return toast.error("Email and password are required");
-    //        }
-    //         // Dispatching the loginUser mutation with email and password
-    //         loginUser({ email, password })
-    //             .unwrap()
-    //             .then((response) => {
-    //                 console.log("Login successful:", response);
-    //                 if (response?.success) { 
-    //                     localStorage.setItem("token", response?.data?.token);
-    //                     toast.success(response?.message);
-    //                     dispatch(setToken(response?.data?.token));
-                       
-    //                     router.push('/');
-    //                 } 
-    //             })
-    //             .catch((error) => {
-    //                 console.error("Login failed inside:", error);
-    //                 toast.error(error?.data?.message +'inside' || "Login failed inside");
-    //             });
+        // toast.success('Login successfull')
+        // redirect('/')
+        try {
+            if(!email || !password) {
+                return toast.error("Email and password are required");
+            }
+            // Dispatching the loginUser mutation with email and password
+            console.log(email, password);
+            loginUser({ email, password })
+            .unwrap()
+            .then((response) => {
+                    console.log("Login successful:", response);
+                    if (response?.success) { 
+                        localStorage.setItem("token", response?.data?.token);
+                        toast.success(response?.message);
+                        dispatch(setToken(response?.data?.token));
+                        router.push('/');
+                    } 
+                })
+                .catch((error) => {
+                    console.error("Login failed inside:", error);
+                    toast.error(error?.data?.message +'inside' || "Login failed inside");
+                });
            
-    //    } catch (error) {
-    //     console.error("Login failed outside:", error);
-    //    }
+       } catch (error) {
+        console.error("Login failed outside:", error);
+       }
     };
 
     return (

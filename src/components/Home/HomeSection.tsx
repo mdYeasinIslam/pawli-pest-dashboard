@@ -16,6 +16,7 @@ import SheduleSection from "./SheduleSection"
 import DateTime from "./DateTime"
 import Header from "./Header"
 import ActionButtons from "./ActionButtons"
+import TooltipContent from "./TooltipContent"
 interface PostCreatorProps {
   initialData?: Partial<PostData>
   onSave?: (data: PostData) => void
@@ -33,7 +34,7 @@ export default function HomeSection() {
   const [showStaticModal, setShowStaticModal] = useState(false)
   
   // state for image uploading
-  const [dragActive, setDragActive] = useState(false)
+  // const [dragActive, setDragActive] = useState(false)
   const [uploadedImage, setUploadedImage] = useState<string | null>(initialData?.imagePreview || null) // State for uploaded image preview. ( can display the image preview in the UI by using this state variable)
   const [selectedFile, setSelectedFile] = useState<File | null>(null) // State for the selected file. ( can display the image preview in the UI by using this state variable and when send image to the backend, you can use this state variable to send the file)
 
@@ -42,11 +43,15 @@ export default function HomeSection() {
   const [linkText, setLinkText] = useState<string>("")
   const [contentText, setContentText] = useState<string>("")
   const [checkText, setCheckText] = useState<boolean>(false)
-
+  console.log(linkText)
   // state for schedule section handler : hide "date and time section"
-      const [isYes, setIsYes] = useState(true)
-      
-      const handleFileSelect = useCallback((file: File): void => {
+  const [isYes, setIsYes] = useState(true)
+  const [postDate, setPostDate] = useState('')
+  const [postTime,setPostTime] = useState('')
+
+
+      //handle image upload
+  const handleFileSelect = useCallback((file: File): void => {
         setSelectedFile(file)
         const reader = new FileReader()
         reader.onload = (e) => {
@@ -55,11 +60,11 @@ export default function HomeSection() {
         reader.readAsDataURL(file)
       }, [])
     
-      const handleFileRemove = useCallback((): void => {
-        setUploadedImage(null)
-        setSelectedFile(null)
-      }, [])
-
+  const handleFileRemove = useCallback((): void => {
+      setUploadedImage(null)
+      setSelectedFile(null)
+  }, [])
+//----------------------------------------------
 
 
   //validate and preview functions can be implemented as needed
@@ -84,14 +89,20 @@ export default function HomeSection() {
   }
 
     
-  // }
+  
   useEffect(() => {
     if (selectDeviceType?.length > 0) {
          setShowPreviewModal(false)
          
      }
-    
   },[selectDeviceType])
+
+  const getDateAndTime = (date:string,time:string) => {
+    setPostDate(date),
+      setPostTime(time)
+  }
+console.log(postDate,postTime)
+
 
     return (
       <section className="h-screen my-8 ">
@@ -109,8 +120,8 @@ export default function HomeSection() {
                           onFileSelect={handleFileSelect}
                           onFileRemove={handleFileRemove}
                           uploadedImage={uploadedImage}
-                          dragActive={dragActive}
-                          onDragStateChange={setDragActive}
+                          // dragActive={dragActive}
+                          // onDragStateChange={setDragActive}
                       />
                     </div>
 
@@ -118,7 +129,7 @@ export default function HomeSection() {
                     <div className="space-y-5 col-span-3">
                       {/* Post Input Section  */}
                         <div className="space-y-7   ">
-                            <div className="space-y-3">
+                            {/* <div className="space-y-3">
                                 <div className="relative">
                                 <Label className=" text-[28px] font-semibold font-urbanist">Tooltip content</Label>
                                   <Textarea
@@ -137,7 +148,12 @@ export default function HomeSection() {
                                     </Button>
                                   </div>
                                 </div>
-                              </div>
+                              </div> */}
+                              <TooltipContent
+                                  linkText={linkText}
+                                  setLinkText={setLinkText}
+                              
+                              />
 
                               {/* Push notification header section */}
                               <div className="space-y-3">
@@ -174,7 +190,7 @@ export default function HomeSection() {
                 
                         {/* Date and Time section */}
                         {
-                          isYes &&   <DateTime/>
+                          isYes &&   <DateTime getDateAndTime={getDateAndTime} />
                         }
                       
                     </div>
