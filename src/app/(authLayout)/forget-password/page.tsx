@@ -51,7 +51,7 @@ const ForgetPassword = () => {
                                     className="w-full bg-black text-white py-5 px-4 rounded-xl hover:bg-green-600 transition duration-300 cursor-pointer"
                                 >
                                     Recover Email
-                                </button>
+                                </button> 
                             </Link>
                         </form>
 
