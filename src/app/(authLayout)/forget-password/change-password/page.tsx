@@ -1,7 +1,7 @@
 'use client';
 import React, { FormEvent, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
-import {  redirect, useRouter } from "next/navigation";
+import {  useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useUpdatePasswordMutation } from "@/redux/services/Api/auth/authApi";
 import { jwtDecode } from "jwt-decode";
@@ -56,7 +56,7 @@ const page = () => {
                         toast.success(response?.message);
                         // dispatch(setToken(response?.data?.token));
                         localStorage.removeItem('token')
-                        router.push('/signIn');
+                        router.push('/');
                     } 
                 })
                 .catch((error) => {

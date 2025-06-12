@@ -6,6 +6,8 @@ import FormPart from "@/components/auth/FormPart";
 import { useAppDispatch } from "@/redux/hooks";
 import { useLoginUserMutation } from "@/redux/services/Api/auth/authApi";
 import { setToken } from "@/redux/services/Api/auth/authSlice";
+import HeaderPart from "@/components/auth/HeaderPart";
+import Cookies from "js-cookie";
 
 const LoginPage = () => {
     // Importing the useAppDispatch hook to dispatch actions
@@ -36,10 +38,13 @@ const LoginPage = () => {
             loginUser({ email, password })
             .unwrap()
             .then((response) => {
-                    console.log("Login successful:", response?.data?.role);
-                    if (response?.success) { 
-                        if (response?.data?.role ==='ADMIN') {
-                            localStorage.setItem("token", response?.data?.token);
+                if (response?.success) {
+                    if (response?.data?.role ==='ADMIN') {
+                            console.log("Login successful:", response);
+                            // localStorage.setItem("token", response?.data?.token);
+                            Cookies.set("token", response?.data?.token);
+
+
                             dispatch(setToken(response?.data?.token));
                             toast.success(response?.message + ' as Admin');
                             router.push('/dashboard');
@@ -49,7 +54,7 @@ const LoginPage = () => {
                             toast.error( `You role is ${response?.data?.role}!! You don't have permission to access Dashboard`);
                             router.push('/error-page')
                         }
-                    } 
+                    }
                 })
                 .catch((error) => {
                     console.error("Login failed inside:", error);
@@ -63,14 +68,14 @@ const LoginPage = () => {
 
     return (
         <div className="  h-screen">
-            <div className="">
+            <div className="h-full grid grid-cols-3">
                 {/* Left Side - Image */}
-                {/* <div>
+                <div>
                     <HeaderPart />
-                </div> */}
+                </div>
 
                 {/* Right Side - Login Form */}
-                <div className=" h-screen rounded-lg flex flex-col justify-center gap-10">
+                <div className="col-span-2 h-screen rounded-lg flex flex-col justify-center gap-10">
                     <div className="w-1/2  mx-auto space-y-12">
                         <h2 className="text-6xl font-bold text-gray-800  text-start">Login</h2>
                         <FormPart
@@ -90,3 +95,4 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+

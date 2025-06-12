@@ -9,7 +9,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { AllPostData } from "@/Types/post"
 
-export default function PendingPosts({ allPost }: { allPost?: AllPostData[] }) {
+export default function ShowPendingPost({ allPost }: { allPost?: AllPostData[] }) {
   const param = usePathname()
   const pageName = param.split('/dashboard')
   const [openModal, setOpenModal] = useState<number | null>(null)

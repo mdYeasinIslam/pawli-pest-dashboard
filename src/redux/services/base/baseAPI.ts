@@ -5,6 +5,6 @@ export const baseApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl:'https://paulinefst.onrender.com/api/v1'
     }),
-    tagTypes: ['User', 'Post'],
+    // tagTypes: ['User', 'Post'],
     endpoints:()=>({}),
 })

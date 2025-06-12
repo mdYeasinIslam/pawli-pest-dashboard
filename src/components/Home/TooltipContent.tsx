@@ -28,7 +28,10 @@ const linkStyles = `
   
   .preview-content a:hover {
     color: #1d4ed8;
-  }`
+
+
+  }
+  `
 
 type Prop = {
     linkText: string,
@@ -43,7 +46,7 @@ const TooltipContent = ({ linkText, setLinkText }: Prop) => {
   const config = {
         readonly: false,
         placeholder: "Write here...",
-        height: 100,
+        height:50,
         toolbar: true,
         buttons: ["link"],
         buttonsMD: ["link"],
@@ -62,16 +65,16 @@ const TooltipContent = ({ linkText, setLinkText }: Prop) => {
             followOnDblClick: false,
             processVideoLink: false,
             processPastedLink: true,
-            openInNewTabCheckbox: true,
+            openInNewTabCheckbox: false,
             noFollowCheckbox: false,
             modeClassName: "input" as "input",
         },
         extraCSS: linkStyles,
-        iframe: false,
+        // iframe: false,
         iframeStyle: linkStyles,
 }
   return (
-    <div className="space-y-3">
+    <div className="">
         <div className="relative">
         <Label className=" text-[28px] font-semibold font-urbanist">Tooltip content</Label>
             {/* <Textarea
@@ -81,7 +84,7 @@ const TooltipContent = ({ linkText, setLinkText }: Prop) => {
                 onChange={(e)=>setLinkText(e.target.value)}
             className="min-h-[80px] h-[130px] pr-16 resize-none border-gray-200 focus:border-gray-300 focus:ring-1 focus:ring-gray-300"
             /> */}
-                    <style dangerouslySetInnerHTML={{ __html: linkStyles }} />
+              <style dangerouslySetInnerHTML={{ __html: linkStyles }} />
 
               <div className=''>
                   

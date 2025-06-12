@@ -18,14 +18,14 @@ const Header = () => {
                   </div>
                   </button>
                    {showPostStatus && (
-          <div className=" z-10 absolute top-20 right-[3%] xl:right-[8%] 2xl:right-[15%] mt-2 w-60 bg-white rounded-md shadow-lg">
+          <div className=" z-10 absolute top-20 right-[3%] xl:right-[8%] 2xl:right-[11%] mt-2 w-60 bg-white rounded-md shadow-lg">
               <button className=" w-full text-left px-4 py-2 text-md font-semibold text-black hover:bg-gray-100">
-            <Link href={'published-post'}>
+            <Link href={'/dashboard/published-post'}>
                 Published post
             </Link>
               </button>
             <button className="w-full text-left px-4 py-2 text-md font-semibold text-black hover:bg-gray-100">
-            <Link href={'pending-post'}>
+            <Link href={'/dashboard/pending-post'}>
               Pending post
             </Link>
             </button>

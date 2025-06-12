@@ -12,10 +12,11 @@ import { Calendar } from '../ui/calendar'
 type PropType = {
   setPostTime?: React.Dispatch<React.SetStateAction<string>>
   setPostDate?: React.Dispatch<React.SetStateAction<string>>
+  isYes?:boolean
   getDateAndTime: (date: string, time: string) => void
 }
 
-const DateTime = ({ getDateAndTime }: PropType) => {
+const DateTime = ({ getDateAndTime,isYes }: PropType) => {
   const [date, setDate] = useState<Date>(new Date())
   const [time, setTime] = useState({ hour: "10", minute: "30", period: "AM" })
 
@@ -39,7 +40,13 @@ const DateTime = ({ getDateAndTime }: PropType) => {
   const formattedTime = `${hour24}:${time.minute}`;
 
   React.useEffect(() => {
-    getDateAndTime(formattedDate, formattedTime)
+    if (!isYes) {
+      getDateAndTime('no','no')
+      console.log(isYes)
+    }
+    else {
+      getDateAndTime(formattedDate, formattedTime)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formattedDate, formattedTime])
 

@@ -1,7 +1,6 @@
 'use client';
 import React, { FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { useForgetPasswordMutation } from "@/redux/services/Api/auth/authApi";
 import { toast } from "sonner";
 

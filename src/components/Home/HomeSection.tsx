@@ -17,6 +17,7 @@ import DateTime from "./DateTime"
 import Header from "./Header"
 import ActionButtons from "./ActionButtons"
 import TooltipContent from "./TooltipContent"
+import { usePostNewsMutation } from "@/redux/services/Api/post/postApi"
 interface PostCreatorProps {
   initialData?: Partial<PostData>
   onSave?: (data: PostData) => void
@@ -27,7 +28,7 @@ interface PostCreatorProps {
 export default function HomeSection() {
   // Define initialData as an empty object or with default values
   const initialData: Partial<PostData> = {}
-
+  const [postNews] = usePostNewsMutation()
   //State for managing modal
   const [showPreviewModal, setShowPreviewModal] = useState(false)
   const [selectDeviceType, setSelectDeviceType] = useState('')
@@ -43,12 +44,12 @@ export default function HomeSection() {
   const [linkText, setLinkText] = useState<string>("")
   const [contentText, setContentText] = useState<string>("")
   const [checkText, setCheckText] = useState<boolean>(false)
-  console.log(linkText)
   // state for schedule section handler : hide "date and time section"
   const [isYes, setIsYes] = useState(true)
   const [postDate, setPostDate] = useState('')
   const [postTime,setPostTime] = useState('')
-
+  
+  
 
       //handle image upload
   const handleFileSelect = useCallback((file: File): void => {
@@ -67,16 +68,62 @@ export default function HomeSection() {
 //----------------------------------------------
 
 
-  //validate and preview functions can be implemented as needed
-  const handleValidate = (): void => {
-    if (!linkText.length || !contentText.length) {
+  //validate and preview functions can be implemented as needed and integrate post api
+  // console.log(uploadedImage)
+  const handleValidate = () => {
+    if (!linkText.length || !contentText.length || !uploadedImage || !selectedFile) {
       setCheckText(false)
-      toast("Please fill in all fields before validating.")
+      toast("Please fill in all fields before validating.(image, tooptip, notification")
       return
     }
-    else {
-      setCheckText(true)
+    //   console.log(linkText)
+    //   console.log(contentText)
+    //   console.log(postDate)
+    // console.log(postTime)
+    try {
+      const formData = new FormData();
+
+      // 1. Add file (assumes you already have a File object from input)
+          
+      // 2. Add JSON string for `data`
+      if (postDate && postTime) {
+        const data = {
+          content: linkText,
+          pushHeader: 'Le chiffre du jour',
+          pushContent: contentText,
+          scheduledDate: postDate,
+          scheduledTime: postTime,
+        };
+        formData.append('data', JSON.stringify(data));
+      }
+      else {
+        const data = {
+          content: linkText,
+          pushHeader: 'Le chiffre du jour',
+          pushContent: contentText,
+        };
+        formData.append('data', JSON.stringify(data));
+      }
+      formData.append('image', selectedFile);
+          
+
+      // 3. Call API
+      // const res = await postNews(formData).unwrap();
+      console.log('before')
+      fetch('https://pauline.onrender.com/api/v1/posts', {
+        method: "POST",
+        body: formData
+      }).then(res => res.json())
+        .then(data => {
+          toast.success('post created successfully')
+          console.log('Success:', data);
+        })
     }
+    catch (error) {
+        console.error('Post failed:', error);
+      }
+      setCheckText(true)
+
   }
   
   const handleResetAfeterSavePost = () => { 
@@ -88,7 +135,12 @@ export default function HomeSection() {
     setCheckText(false); // Reset check text state
   }
 
-    
+  useEffect(() => {
+      if (!isYes) {
+      setPostDate('')
+      setPostTime('')
+    }
+    },[isYes])
   
   useEffect(() => {
     if (selectDeviceType?.length > 0) {
@@ -97,11 +149,10 @@ export default function HomeSection() {
      }
   },[selectDeviceType])
 
-  const getDateAndTime = (date:string,time:string) => {
+  const getDateAndTime = (date: string, time: string) => {
     setPostDate(date),
-      setPostTime(time)
+    setPostTime(time)
   }
-console.log(postDate,postTime)
 
 
     return (
@@ -161,7 +212,7 @@ console.log(postDate,postTime)
                                 <Input
                                   defaultValue="Le chiffre du jour"
                                   readOnly
-                                  className="h-[70px] border-gray-200 focus:border-gray-300 focus:ring-1 focus:ring-gray-300"
+                                  className="h-[40px] border-gray-200 focus:border-gray-300 focus:ring-1 focus:ring-gray-300"
                                 />
                               </div>
 
@@ -174,7 +225,7 @@ console.log(postDate,postTime)
                                     onChange={(e)=>setContentText(e.target.value)}
                                     value={contentText}
                                     required
-                                    className="min-h-[100px] h-[130] pr-8 resize-none border-gray-200 focus:border-gray-300 focus:ring-1 focus:ring-gray-300"
+                                    className="min-h-[50px] h-[90px] pr-8 resize-none border-gray-200 focus:border-gray-300 focus:ring-1 focus:ring-gray-300"
                                   />
                                   <div className="absolute bottom-3 right-3">
                                     <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-gray-400 hover:text-gray-600">
@@ -190,7 +241,7 @@ console.log(postDate,postTime)
                 
                         {/* Date and Time section */}
                         {
-                          isYes &&   <DateTime getDateAndTime={getDateAndTime} />
+                  isYes && <DateTime getDateAndTime={getDateAndTime} isYes={isYes} />
                         }
                       
                     </div>
