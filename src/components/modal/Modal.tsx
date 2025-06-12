@@ -1,7 +1,6 @@
 import React from 'react'
-import { Button } from '../ui/button'
 import { BatteryFull, Bookmark, Info, MessageCircle, Settings, SignalHigh, Wifi, X } from 'lucide-react'
-import { toast } from 'sonner';
+
 import { BsFillBookmarkCheckFill } from 'react-icons/bs';
 import { GrAnnounce } from 'react-icons/gr';
 import LoadingSpinner from '@/app/loading';
@@ -20,44 +19,44 @@ interface ModalProps {
 const Modal: React.FC<ModalProps> = ({ selectedFile,uploadedImage,text, content, setShowPreviewModal,handleResetAfeterSavePost,setSelectDeviceType,device}) => {
 const [loading, setLoading] = React.useState(false);
   
-    const handlePostContent = async () => {
-        if (!selectedFile) return;
+    // const handlePostContent = async () => {
+    //     if (!selectedFile) return;
 
-        setLoading(true); //  Start spinner before API call
+    //     setLoading(true); //  Start spinner before API call
 
-        try {
-            const formData = new FormData(); // Create a new FormData object to hold the data for the POST request
-            const data = {
-            content,
-            link: text,
-            status: 'PENDING',
-            scheduledAt: new Date().toISOString(),
-            };
+    //     try {
+    //         const formData = new FormData(); // Create a new FormData object to hold the data for the POST request
+    //         const data = {
+    //         content,
+    //         link: text,
+    //         status: 'PENDING',
+    //         scheduledAt: new Date().toISOString(),
+    //         };
 
-            formData.append('data', JSON.stringify(data));
-            formData.append('images', selectedFile);
+    //         formData.append('data', JSON.stringify(data));
+    //         formData.append('images', selectedFile);
 
-            const res = await fetch('https://paulinefst.onrender.com/api/v1/posts', {
-            method: 'POST',
-            body: formData,
-            });
+    //         const res = await fetch('https://paulinefst.onrender.com/api/v1/posts', {
+    //         method: 'POST',
+    //         body: formData,
+    //         });
 
-            const resData = await res.json();
+    //         const resData = await res.json();
 
-            if (res.ok) {
-                toast.success('Post content saved successfully!');
-                handleResetAfeterSavePost(); // Reset the form after successful post
+    //         if (res.ok) {
+    //             toast.success('Post content saved successfully!');
+    //             handleResetAfeterSavePost(); // Reset the form after successful post
             
-            } else {
-            toast.error(`Error: ${resData.message || 'Unknown error'}`);
-            }
-        } catch (error) {
-            console.error('API error:', error);
-            toast.error('An unexpected error occurred.');
-        } finally {
-            setLoading(false); //  Always stop loading
-        }
-    };
+    //         } else {
+    //         toast.error(`Error: ${resData.message || 'Unknown error'}`);
+    //         }
+    //     } catch (error) {
+    //         console.error('API error:', error);
+    //         toast.error('An unexpected error occurred.');
+    //     } finally {
+    //         setLoading(false); //  Always stop loading
+    //     }
+    // };
     return (
         <div className="fixed inset-0 bg-[#180E25]/50 backdrop-blur-sm flex items-center justify-center z-50">
             {/* Modal Container */}

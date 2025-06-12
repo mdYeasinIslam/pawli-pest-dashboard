@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseApi } from "../../base/baseAPI";
 import { url } from "inspector";
+import { AllPostData } from "@/Types/post";
 
 export const postApi = createApi({
     reducerPath: 'postapi',
@@ -32,9 +33,18 @@ export const postApi = createApi({
                 method:'DELETE'
             }),
             invalidatesTags:['Post']
+        }),
+        //update each post
+        updatePost:build.mutation({
+           query:({id,data}:{id:string,data:AllPostData})=>({
+                url:`/posts/${id}`,
+                method:'DELETE',
+                body:data
+            }),
+            invalidatesTags:['Post']
         })
     }),
 });
 
-export const { useGetAllPostQuery,useGetPendingPostQuery, usePostNewsMutation ,useDeletePostMutation} = postApi;
+export const { useGetAllPostQuery,useGetPendingPostQuery, usePostNewsMutation ,useDeletePostMutation,useUpdatePostMutation} = postApi;
 

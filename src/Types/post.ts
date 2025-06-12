@@ -16,9 +16,9 @@ export type AllPostData = {
   updatedAt?: string
   imageUrl?: string
   published?: boolean
-  pushContent: string
-  pushHeader: string
-  scheduledDate: string
+  pushContent?: string
+  pushHeader?: string
+  scheduledDate?: string
 }
 
 export type PendingPost = {

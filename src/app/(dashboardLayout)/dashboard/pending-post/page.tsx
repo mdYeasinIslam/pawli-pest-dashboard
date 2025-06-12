@@ -1,9 +1,8 @@
 'use client'
 import LoadingSpinner from "@/app/loading";
 import PostList from "@/components/post/PostList";
-import ShowPendingPost from "@/components/post/ShowPendingPost";
 import { Button } from "@/components/ui/button";
-import {  useGetAllPostQuery, useGetPendingPostQuery } from "@/redux/services/Api/post/postApi";
+import {   useGetPendingPostQuery } from "@/redux/services/Api/post/postApi";
 import { AllPostData } from "@/Types/post";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
