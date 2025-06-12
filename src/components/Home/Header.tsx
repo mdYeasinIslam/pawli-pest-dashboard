@@ -9,11 +9,11 @@ const Header = () => {
                 <p></p>
                 <p className=" text-sm font-medium">New Post: 11 AM, July 1st, 2025</p>
                 <button className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
-                  <div onClick={()=>setShowPostStatus(!showPostStatus)}>
+                  <div onClick={()=>setShowPostStatus(!showPostStatus)} className='cursor-pointer'>
                     {
                       !showPostStatus?
-                      <ChevronRight className="w-4 h-4 text-black" />:
-                      <ChevronDown  className="w-4 h-4 text-black"/>
+                      <ChevronRight className=" w-4 h-4 text-black" />:
+                      <ChevronDown  className=" w-4 h-4 text-black"/>
                     }
                   </div>
                   </button>

@@ -26,7 +26,7 @@ const ActionButtons: React.FC<Prop> = ({
     <div className=" flex justify-end space-x-4 my-8 ">
                 <Button
                     onClick={handleValidate}
-                    className={`cursor-pointer  text-white px-6 py-6 text-lg rounded-lg font-medium ${!checkText?'bg-[#FF0000] hover:bg-red-600':'bg-green-500 hover:bg-green-600'}`}>{ !checkText?'Validate':'Modify'}</Button>
+                    className={`cursor-pointer  text-white px-6 py-6 text-lg rounded-lg font-medium ${!checkText?'bg-[#FF0000] hover:bg-red-600':'bg-green-500 hover:bg-green-600'}`}>Validate</Button>
                 <Button
                     //  onClick={() => setShowPreviewModal(true)}
                      onClick={() => setShowPreviewModal(true)}

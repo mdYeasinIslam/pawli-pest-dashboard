@@ -10,19 +10,20 @@ import { useEffect, useState } from "react";
 
 
 type GetAllPostResponse = {
-  success: boolean;
+  success: boolean; 
   message: string;
   data: AllPostData[];
 };
 
 const page=() =>{
-  const { data,error,isLoading} = useGetAllPostQuery() as {data:GetAllPostResponse,error:unknown,isLoading:unknown};
+  const { data,error,isLoading,refetch} = useGetAllPostQuery() as {data:GetAllPostResponse,error:unknown,isLoading:unknown,refetch:()=>void};
   const [allPost, setAllPost] = useState<AllPostData[] | []>()
   useEffect(() => {
     setAllPost(data?.data)
-  }, [data])
+    refetch
+  }, [data,refetch])
   
-  console.log(allPost)
+  // console.log(allPost)
   if (isLoading) return <div><LoadingSpinner/></div>
   if (error) return <div>An Error is occur</div>
   return (
@@ -35,7 +36,7 @@ const page=() =>{
         </Link>
         <h1 className="text-xl font-medium">Published Post</h1>
       </div>
-      <PostList allPost={allPost} />
+      <PostList allPost={allPost} refetch={refetch}/>
       </>
   )
 }

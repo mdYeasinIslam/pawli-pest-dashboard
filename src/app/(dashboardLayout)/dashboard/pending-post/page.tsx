@@ -10,20 +10,17 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 
-type GetAllPostResponse = {
-  success: boolean;
-  message: string;
-  data: AllPostData[];
-};
-
 const page=() =>{
-  const { data,error,isLoading} = useGetAllPostQuery() as {data:GetAllPostResponse,error:unknown,isLoading:unknown};
+  const { data,error,isLoading,refetch} = useGetPendingPostQuery() as {data:AllPostData[],error:unknown,isLoading:unknown,refetch:()=>void};
    const [allPost, setAllPost] = useState<AllPostData[] | []>()
    useEffect(() => {
-     setAllPost(data?.data)
-   }, [data])
+    if(data){
+      setAllPost(data)
+      refetch()
+    }
+   }, [data,refetch]) 
    
-   console.log(allPost)
+  //  console.log(data)
   if (isLoading) return <div><LoadingSpinner/></div>
   if (error) return <div>An Error is occur</div>
   return (
@@ -36,7 +33,7 @@ const page=() =>{
         </Link>
         <h1 className="text-xl font-medium">Pending Post</h1>
       </div>
-      <ShowPendingPost allPost={allPost} />
+      <PostList allPost={allPost} refetch={refetch}/>
       </>
   )
 }

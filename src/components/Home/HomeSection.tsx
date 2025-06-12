@@ -18,6 +18,7 @@ import Header from "./Header"
 import ActionButtons from "./ActionButtons"
 import TooltipContent from "./TooltipContent"
 import { usePostNewsMutation } from "@/redux/services/Api/post/postApi"
+import JoditTextArea from "../jodit-react/JoditTextArea"
 interface PostCreatorProps {
   initialData?: Partial<PostData>
   onSave?: (data: PostData) => void
@@ -76,10 +77,6 @@ export default function HomeSection() {
       toast("Please fill in all fields before validating.(image, tooptip, notification")
       return
     }
-    //   console.log(linkText)
-    //   console.log(contentText)
-    //   console.log(postDate)
-    // console.log(postTime)
     try {
       const formData = new FormData();
 
@@ -109,13 +106,17 @@ export default function HomeSection() {
 
       // 3. Call API
       // const res = await postNews(formData).unwrap();
-      console.log('before')
       fetch('https://pauline.onrender.com/api/v1/posts', {
         method: "POST",
         body: formData
       }).then(res => res.json())
         .then(data => {
           toast.success('post created successfully')
+            setSelectedFile(null); // Reset selected file
+            setUploadedImage(null); // Reset uploaded image
+            setContentText('');  // Reset content text
+            setLinkText(''); // Reset link text
+            // setCheckText(false); // Reset check text state
           console.log('Success:', data);
         })
     }
@@ -156,7 +157,7 @@ export default function HomeSection() {
 
 
     return (
-      <section className="h-screen my-8 ">
+      <section className="h-full my-8 ">
         <div className=" container mx-auto px-6 space-y-6 ">
             {/* Header */}
             <Header/>
@@ -165,7 +166,7 @@ export default function HomeSection() {
             <div className=" ">
                 <div className=" grid grid-cols-1 lg:grid-cols-5  gap-10 ">
                 {/* Left Column - Upload Area */}
-                    <div className="col-span-2 h-[85%] border-2 border-dashed">
+                    <div className="col-span-2 h-full w-full  border-2 border-dashed">
                       
                       <FileUpload
                           onFileSelect={handleFileSelect}
@@ -180,32 +181,11 @@ export default function HomeSection() {
                     <div className="space-y-5 col-span-3">
                       {/* Post Input Section  */}
                         <div className="space-y-7   ">
-                            {/* <div className="space-y-3">
-                                <div className="relative">
-                                <Label className=" text-[28px] font-semibold font-urbanist">Tooltip content</Label>
-                                  <Textarea
-                                    placeholder="Write here"
-                                    value={linkText}
-                                    required
-                                     onChange={(e)=>setLinkText(e.target.value)}
-                                    className="min-h-[80px] h-[130px] pr-16 resize-none border-gray-200 focus:border-gray-300 focus:ring-1 focus:ring-gray-300"
-                                  />
-                                  <div className="absolute top-3 right-3 flex gap-2">
-                                    <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-gray-400 hover:text-gray-600">
-                                      <Link className="h-4 w-4" />
-                                    </Button>
-                                    <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-gray-400 hover:text-gray-600">
-                                      <Type className="h-4 w-4" />
-                                    </Button>
-                                  </div>
-                                </div>
-                              </div> */}
                               <TooltipContent
                                   linkText={linkText}
                                   setLinkText={setLinkText}
                               
                               />
-
                               {/* Push notification header section */}
                               <div className="space-y-3">
                                 <Label className="text-[28px] font-semibold font-urbanist">Push notification header</Label>

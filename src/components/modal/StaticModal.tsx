@@ -47,7 +47,7 @@ export function StatisticsModal({
       role="dialog"
       aria-modal="true"
     >
-      <div className="bg-white rounded-lg p-6 w-80 relative bottom-20 right-[20%] xl:bottom-20 xl:right-[20%] 2xl:bottom-20 shadow-xl">
+      <div className="bg-white rounded-lg px-3 xl:px-6 w-80 relative bottom-24 right-[8%] xl:bottom-20 xl:right-[10%] 2xl:bottom-[17%] 2xl:right-[12%] shadow-xl">
         <button
           onClick={onClose}
           className="absolute top-2 right-4 w-6 h-6 flex items-center justify-center text-gray-400 hover:text-gray-600 transition-colors"

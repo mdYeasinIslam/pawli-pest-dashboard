@@ -67,7 +67,7 @@ export function FileUpload({
 
   return (
     <div
-     className={`cursor-pointer h-[70vh] place-content-center  rounded-lg p-8 text-center transition-colors ${
+     className={`cursor-pointer h-[70vh] place-content-center   rounded-lg p-8 text-center transition-colors ${
                             dragActive ? "border-blue-400 bg-blue-50" : "border-gray-300 bg-white"
                         }`}
       onDragEnter={handleDrag}
