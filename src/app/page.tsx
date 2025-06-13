@@ -8,6 +8,7 @@ import { useLoginUserMutation } from "@/redux/services/Api/auth/authApi";
 import { setToken } from "@/redux/services/Api/auth/authSlice";
 import HeaderPart from "@/components/auth/HeaderPart";
 import Cookies from "js-cookie";
+import LoadingSpinner from "./loading";
 
 const LoginPage = () => {
     // Importing the useAppDispatch hook to dispatch actions
@@ -17,6 +18,7 @@ const LoginPage = () => {
      const router = useRouter();
     // State to manage password visibility
     const [showPassword, setShowPassword] = useState(false);
+    const [loading,setLoading] = useState(false)
     const togglePasswordVisibility = () => {
         setShowPassword((prev) => !prev);
     }
@@ -24,6 +26,7 @@ const LoginPage = () => {
     
     const handleSubmit = (e: FormEvent<HTMLFormElement | undefined>) => {
         e.preventDefault();
+        setLoading(true)
         const formData = new FormData(e.currentTarget);
         const email = formData.get("email");
         const password = formData.get("password");
@@ -48,6 +51,7 @@ const LoginPage = () => {
                             dispatch(setToken(response?.data?.token));
                             toast.success(response?.message + ' as Admin');
                             router.push('/dashboard');
+                            setLoading(false)
                         }
                         else {
                             
@@ -67,13 +71,15 @@ const LoginPage = () => {
     };
 
     return (
-        <div className="  h-screen">
+        <div className={` h-screen ${loading?'brightness-75 opacity-60':""}`}>
             <div className="h-full grid grid-cols-3">
                 {/* Left Side - Image */}
                 <div>
                     <HeaderPart />
                 </div>
-
+                {
+                    loading && <div className="absolute text-green-800 right-[50%]"><LoadingSpinner/></div>
+                }
                 {/* Right Side - Login Form */}
                 <div className="col-span-2 h-screen rounded-lg flex flex-col justify-center gap-10">
                     <div className="w-1/2  mx-auto space-y-12">
