@@ -108,9 +108,9 @@ export default function PostModifyModal() {
             }
 
             // Call the mutation to update the post
-            // const res = await updatePost({ id, data: formData }).unwrap();
-            // console.log('Post updated:', res);
-            // toast.success('Post updated successfully');
+            const res = await updatePost({ id, data: formData }).unwrap();
+            console.log('Post updated:', res);
+            toast.success('Post updated successfully');
         } catch (error) {
             console.error('Post update failed:', error);
             toast.error('Failed to update post');
