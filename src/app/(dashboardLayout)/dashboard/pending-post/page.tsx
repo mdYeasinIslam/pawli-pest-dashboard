@@ -19,14 +19,13 @@ const page=() =>{
     }
    }, [data,refetch]) 
    
-  //  console.log(data)
   if (isLoading) return <div><LoadingSpinner/></div>
   if (error) return <div>An Error is occur</div>
   return (
     <>
       <div className="flex  max-w-6xl mx-auto items-center mt-6 mb-2">
         <Link href={'/dashboard'}>
-          <Button variant="ghost" size="icon" className="mr-2">
+          <Button variant="ghost" size="icon" className="cursor-pointer mr-2">
             <ChevronLeft className="h-5 w-5" />
           </Button>
         </Link>

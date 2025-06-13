@@ -19,6 +19,11 @@ export const postApi = createApi({
         getPendingPost: build.query<unknown,void>({
             query: () => '/posts/pending'
         }),
+        //get post by id
+        getPostById :build.query<unknown,string>({
+            query : (id)=>`/posts/${id}`
+        }),
+
         //create post
         postNews: build.mutation({
             query: () => ({
@@ -36,15 +41,15 @@ export const postApi = createApi({
         }),
         //update each post
         updatePost:build.mutation({
-           query:({id,data}:{id:string,data:AllPostData})=>({
+           query:({id,data})=>({
                 url:`/posts/${id}`,
-                method:'DELETE',
-                body:data
+                method:'PUT',
+                body:data,
             }),
             invalidatesTags:['Post']
         })
     }),
 });
 
-export const { useGetAllPostQuery,useGetPendingPostQuery, usePostNewsMutation ,useDeletePostMutation,useUpdatePostMutation} = postApi;
+export const { useGetAllPostQuery,useGetPendingPostQuery, useGetPostByIdQuery, usePostNewsMutation ,useDeletePostMutation,useUpdatePostMutation} = postApi;
 

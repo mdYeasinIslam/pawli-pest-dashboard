@@ -113,8 +113,8 @@ const customLinkDialog = (editor:any) => {
                             value={linkText}
                             config={config}
                             tabIndex={1}
-                            onBlur={(newContent) => setLinkText(newContent)}
-                            // onChange={(newContent) => {}}
+                             onBlur={(newContent) => setLinkText(newContent)}
+                            onChange={(newContent) =>setLinkText(newContent)}
                         />
 
                   </div>

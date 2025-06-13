@@ -30,7 +30,7 @@ const page=() =>{
     <>
        <div className="flex  max-w-6xl mx-auto items-center mt-6 mb-2">
         <Link href={'/dashboard'}>
-          <Button variant="ghost" size="icon" className="mr-2">
+          <Button variant="ghost" size="icon" className="cursor-pointer mr-2">
             <ChevronLeft className="h-5 w-5" />
           </Button>
         </Link>
