@@ -61,11 +61,13 @@ const LoginPage = () => {
                     }
                 })
                 .catch((error) => {
+                    setLoading(false)
                     console.error("Login failed inside:", error);
                     toast.error(error?.data?.message +'inside' || "Login failed inside");
                 });
            
        } catch (error) {
+        setLoading(false)
         console.error("Login failed outside:", error);
        }
     };

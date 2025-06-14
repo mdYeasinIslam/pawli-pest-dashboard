@@ -19,6 +19,8 @@ import ActionButtons from "./ActionButtons"
 import TooltipContent from "./TooltipContent"
 import { usePostNewsMutation } from "@/redux/services/Api/post/postApi"
 import JoditTextArea from "../jodit-react/JoditTextArea"
+import Marquee from "./HeaderSlider/Marquee "
+import MarqueeHeader from "./HeaderSlider/Marquee "
 interface PostCreatorProps {
   initialData?: Partial<PostData>
   onSave?: (data: PostData) => void
@@ -155,11 +157,11 @@ export default function HomeSection() {
     setPostTime(time)
   }
 
+  console.log(linkText)
 
     return (
       <section className="h-full my-8 ">
         <div className=" container mx-auto px-6 space-y-6 ">
-            {/* Header */}
             <Header/>
 
             {/* Main Content */}

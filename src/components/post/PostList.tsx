@@ -14,19 +14,19 @@ import { useRouter } from "next/navigation"
 type Prop = {
   allPost?:AllPostData[]
   refetch: () => void
+  page:string
 }
 
-export default function PendingPosts({ allPost ,refetch}:Prop) {
+export default function PendingPosts({ allPost ,refetch,page}:Prop) {
   const [deletePost] = useDeletePostMutation()
   const router = useRouter()
   // const { refetch } = useGetAllPostQuery();
   const [openModal, setOpenModal] = useState<string | null>(null)
-  const [editPost,setEditPost] = useState<AllPostData | []>([])
-  // const [deletPost,setDeletePost] = useState<string | null>(null)
+  // const [editPost,setEditPost] = useState<AllPostData | []>([])
 
   const handleModifyPost = (post: AllPostData) => {
-    setEditPost(post)
-    router.push(`/dashboard/pending-post/${post?.id}`)
+    // setEditPost(post)
+    router.push(`/dashboard/${page}/${post?.id}`)
   }
 
   const handleDeletePost = async(postId: string) => {

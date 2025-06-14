@@ -36,7 +36,7 @@ const page=() =>{
         </Link>
         <h1 className="text-xl font-medium">Published Post</h1>
       </div>
-      <PostList allPost={allPost} refetch={refetch}/>
+      <PostList allPost={allPost} refetch={refetch} page='published-post'/>
       </>
   )
 }

@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Label } from '../ui/label'
 import {  CalendarIcon, Clock } from 'lucide-react'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
@@ -8,24 +8,63 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { format } from 'date-fns'
 import { cn } from '@/lib/utils'
 import { Calendar } from '../ui/calendar'
+import { AllPostData } from '@/Types/post'
 
 type PropType = {
   setPostTime?: React.Dispatch<React.SetStateAction<string>>
   setPostDate?: React.Dispatch<React.SetStateAction<string>>
   isYes?:boolean
   getDateAndTime: (date: string, time: string) => void
+   postData?: AllPostData | null
 }
 
-const DateTime = ({ getDateAndTime,isYes }: PropType) => {
-  const [date, setDate] = useState<Date>(new Date())
-  const [time, setTime] = useState({ hour: "10", minute: "30", period: "AM" })
+const DateTime = ({ getDateAndTime,isYes,postData }: PropType) => {
+  // Convert scheduledDate (e.g., "2025-06-01") to "month/day/year" format
+  const currentData = postData?.scheduledDate
+    ? new Date(postData.scheduledDate).toString()
+    : undefined
+  const hour =postData?.scheduledDate?.split('T')[1].split(':')[0];
+  const min =postData?.scheduledDate?.split('T')[1].split(':')[1];
 
+console.log(hour,min)
+  const [date, setDate] = useState<Date | undefined>(
+    currentData ? new Date(currentData) : undefined
+  )
+  // Convert 24-hour format to 12-hour format and determine period
+  let initialHour = "12";
+  let initialMinute = "00";
+  let initialPeriod = "AM";
+  if (hour && min) {
+    let h = parseInt(hour, 10);
+    initialPeriod = h >= 12 ? "PM" : "AM";
+    initialHour = ((h % 12) === 0 ? 12 : (h % 12)).toString();
+    initialMinute = min;
+  }
+  const [time, setTime] = useState({ hour: initialHour, minute: initialMinute, period: initialPeriod })
+// useEffect(() => {
+//     // Extract hour and minute from postData (assuming it's in 24-hour format)
+//     const hour = postData?.scheduledDate?.split('T')[1].split(':')[0]; // Hour in 24-hour format
+//     const min = postData?.scheduledDate?.split('T')[1].split(':')[1]; // Minute
+
+//     if (hour && min) {
+//       // Convert hour from 24-hour format to 12-hour format
+//       let h = parseInt(hour, 10);
+//       let period = h >= 12 ? "PM" : "AM";
+//       let formattedHour = (h % 12 === 0 ? 12 : h % 12).toString(); // Handle hour conversion
+
+//       // Set the time state with hour, minute, and period
+//       setTime({ hour: formattedHour, minute: min, period: period });
+//     }
+//   }, [postData]); // Only rerun when postData changes
+// console.log(time)
   const formatTime = (hour: string, minute: string, period: string) => {
     return `${hour}:${minute} ${period}`
   }
+  // console.log(currentData)
+  console.log(postData)
   // Format date as 2025-05-30
   const formattedDate = date
-    ? `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`
+    ? `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${date?.getDate()?.toString()?.padStart(2, "0")}`
     : '';
   // Format time as 04:06 (24-hour format)
   // Convert 12-hour time to 24-hour format
@@ -61,22 +100,24 @@ const DateTime = ({ getDateAndTime,isYes }: PropType) => {
           <Popover>
             <PopoverTrigger asChild>
               <Button
-                variant="outline"
-                className={cn(
-                  "w-full h-12  text-xl justify-start text-left font-normal border-gray-200  hover:border-gray-300",
-                  !date && "text-muted-foreground ",
-                )}
+              variant="outline"
+              className={cn(
+                "w-full h-12  text-xl justify-start text-left font-normal border-gray-200  hover:border-gray-300",
+                !date && "text-muted-foreground ",
+              )}
               >
-                <CalendarIcon className="mr-2 h-4 w-4 text-gray-400" />
-                {date ? format(date, "M/d/yyyy") : <span>Pick a date</span>}
+              <CalendarIcon className="mr-2 h-4 w-4 text-gray-400" />
+              {date ? format(date, "M/d/yyyy") : format(currentData ? currentData : new Date(), "M/d/yyyy")}
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0" align="start">
               <Calendar
                 mode="single"
-                required={true}
-                selected={date}
-                onSelect={setDate}
+                required={false}
+                selected={currentData ? new Date(currentData) : date}
+                onSelect={(selectedDate) => {
+                  setDate(selectedDate)
+                }}
                 className="rounded-md border shadow-sm"
                 captionLayout="dropdown"
               />
@@ -93,7 +134,7 @@ const DateTime = ({ getDateAndTime,isYes }: PropType) => {
                 className="w-full h-12 text-xl  justify-start text-left font-normal border-gray-200 hover:border-gray-300"
               >
                 <Clock className="mr-2 h-4 w-4 text-gray-400" />
-                {formatTime(time.hour, time.minute, time.period)}
+                {formatTime(time?.hour, time?.minute, time.period)}
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-2" align="start">

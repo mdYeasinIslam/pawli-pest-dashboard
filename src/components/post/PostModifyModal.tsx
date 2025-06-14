@@ -23,7 +23,7 @@ type PostStat = {
     success: boolean;
     message: string;
     data: AllPostData;
-};
+}; 
 
 export default function PostModifyModal() {
     const pathName = usePathname()
@@ -35,10 +35,8 @@ export default function PostModifyModal() {
 
     const [postData, setPostData] = useState<AllPostData | null>(null);
     
-    // State Initialization
-    const [showPreviewModal, setShowPreviewModal] = useState(false)
-    const [selectDeviceType, setSelectDeviceType] = useState('')
-    const [showStaticModal, setShowStaticModal] = useState(false)
+
+
     const [linkText, setLinkText] = useState<string>('')
     const [contentText, setContentText] = useState<string>('')
     const [checkText, setCheckText] = useState<boolean>(false)
@@ -47,7 +45,7 @@ export default function PostModifyModal() {
     const [postTime, setPostTime] = useState<string>('') // Scheduled Time
     const [uploadedImage, setUploadedImage] = useState<string | null>(null) // Image URL for preview
     const [selectedFile, setSelectedFile] = useState<File | null>(null) // Selected file for upload
-
+    
     useEffect(() => {
         if (data?.data) {
             setPostData(data.data);
@@ -60,8 +58,8 @@ export default function PostModifyModal() {
         if (postData) {
             setLinkText(postData.content);
             setContentText(postData.pushContent || "");
-            setPostDate(postData.scheduledDate?.split("T")[0] || "");
-            setPostTime(postData.scheduledDate?.split("T")[1] || "");
+            // setPostDate(postData.scheduledDate?.split("T")[0] || "");
+            // setPostTime(postData.scheduledDate?.split("T")[1] || "");
             setUploadedImage(postData.imageUrl || null);
         }
     }, [postData]);
@@ -83,12 +81,12 @@ export default function PostModifyModal() {
 
     // Handle update function
     const handleUpdate = async () => {
-        if (!linkText.length  || !contentText.length || !uploadedImage) {
+        console.log(linkText.length, contentText.length)
+        if (!linkText.length  || !contentText.length) {
             setCheckText(false)
-            toast("Please fill in all fields before validating. (image, tooltip, notification)")
+            toast.error("Please fill in all fields before validating. (image, tooltip, notification)")
             return
         }
-        console.log(linkText, contentText,postData,postTime)
         try {
             const formData = new FormData();
             const postData = {
@@ -108,6 +106,7 @@ export default function PostModifyModal() {
             }
 
             // Call the mutation to update the post
+
             const res = await updatePost({ id, data: formData }).unwrap();
             console.log('Post updated:', res);
             toast.success('Post updated successfully');
@@ -125,12 +124,6 @@ export default function PostModifyModal() {
             setPostTime('')
         }
     }, [isYes])
-
-    useEffect(() => {
-        if (selectDeviceType?.length > 0) {
-            setShowPreviewModal(false)
-        }
-    }, [selectDeviceType])
 
     const getDateAndTime = (date: string, time: string) => {
         setPostDate(date)
@@ -181,10 +174,10 @@ export default function PostModifyModal() {
                                     <Label className="text-[28px] font-semibold font-urbanist">Push notification text</Label>
                                     <div className="relative">
                                         <Textarea
-                                            placeholder="Write here"
-                                            onChange={(e) => setContentText(e.target.value)}
-                                            value={contentText}
-                                            required
+                                            placeholder="write here"
+                                            onChange={(e) => setContentText(e?.target?.value)}
+                                            defaultValue={postData?.pushContent}
+                                            
                                             className="min-h-[50px] h-[90px] pr-8 resize-none border-gray-200 focus:border-gray-300 focus:ring-1 focus:ring-gray-300"
                                         />
                                         <div className="absolute bottom-3 right-3">
@@ -201,7 +194,7 @@ export default function PostModifyModal() {
 
                             {/* Date and Time section */}
                             {
-                                isYes && <DateTime getDateAndTime={getDateAndTime} isYes={isYes} />
+                                isYes && <DateTime getDateAndTime={getDateAndTime} isYes={isYes} postData={postData}/>
                             }
                         </div>
                     </div>
