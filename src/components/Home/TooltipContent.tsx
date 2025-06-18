@@ -15,6 +15,9 @@ const linkStyles = `
     color: #1d4ed8 !important;
     text-decoration: underline !important;
   }
+  .jodit-wysiwyg {
+    overflow-y: scroll;
+  }
   /* Preview area link styles */
   .preview-content a {
     color: #2563eb;
@@ -25,6 +28,7 @@ const linkStyles = `
     color: #1d4ed8;
   }
 `
+
 // Add this debounce utility function
 function debounce<T extends (...args: any[]) => any>(func: T, wait: number): T {
   let timeout: NodeJS.Timeout
@@ -41,7 +45,8 @@ type Prop = {
 
 const TooltipContent = ({ linkText, setLinkText }: Prop) => {
   const editor = useRef(null)
-const [localContent, setLocalContent] = useState(linkText)
+  const [localContent, setLocalContent] = useState(linkText)
+  
   // Debounced update to parent state
   const debouncedUpdate = useCallback(
     debounce((content: string) => {
@@ -98,7 +103,6 @@ const [localContent, setLocalContent] = useState(linkText)
         processPastedLink: true,
         openInNewTabCheckbox: false,
         noFollowCheckbox: false,
-        modeClassName: "input" as const,
       },
       extraCSS: linkStyles,
       iframe: false,
@@ -106,23 +110,21 @@ const [localContent, setLocalContent] = useState(linkText)
     }),
     [linkStyles],
   )
+
   return (
     <div>
       <div className="relative">
         <Label className="text-[28px] font-semibold font-urbanist">Tooltip content</Label>
         <style dangerouslySetInnerHTML={{ __html: linkStyles }} />
-
-        <div className="flex items-center">
-          <div className="flex-grow">
-            <JoditEditor
-              ref={editor}
-              value={localContent}
-              config={config}
-              tabIndex={1}
-              onBlur={handleEditorBlur}
-              onChange={handleEditorChange}
-            />
-          </div>
+        <div className="flex-grow">
+          <JoditEditor
+            ref={editor}
+            value={localContent} // Only for syncing state
+            config={config}
+            tabIndex={1}
+            onBlur={handleEditorBlur}
+            onChange={handleEditorChange}
+          />
         </div>
       </div>
     </div>

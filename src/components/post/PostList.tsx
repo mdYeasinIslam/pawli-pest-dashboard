@@ -53,7 +53,7 @@ export default function PendingPosts({ allPost ,refetch,page}:Prop) {
                 </Avatar>
                 <div>
                   <p className="text-sm font-medium">
-                    Publier le : {post?.scheduledDate?.split('T')[0]}
+                    Publié le : {post?.scheduledDate?.split('T')[0]}
                   </p>
                   <div className="text-sm text-gray-600">
                     {/* En {post?.content} */}

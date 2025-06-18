@@ -47,17 +47,17 @@ export function StatisticsModal({
       role="dialog"
       aria-modal="true"
     >
-      <div className="bg-white rounded-lg px-3 xl:px-6 w-80 relative bottom-24 right-[8%] xl:bottom-20 xl:right-[10%] 2xl:bottom-[17%] 2xl:right-[12%] shadow-xl">
+      <div className=" bg-white rounded-lg px-3 py-3 xl:px-6 w-80 relative bottom-24 right-[8%] xl:bottom-20 xl:right-[10%] 2xl:bottom-[17%] 2xl:right-[12%] shadow-xl">
         <button
           onClick={onClose}
-          className="absolute top-2 right-4 w-6 h-6 flex items-center justify-center text-gray-400 hover:text-gray-600 transition-colors"
+          className="cursor-pointer absolute top-2 right-4 w-6 h-6 flex items-center justify-center text-gray-400 hover:text-gray-600 transition-colors"
           type="button"
           aria-label="Close statistics modal"
         >
           <X className="w-5 h-5" />
         </button>
 
-        <div className="space-y-4 pt-2">
+        <div className="space-y-4 mt-2">
           <h2 id="statistics-title" className="sr-only">
             Post Statistics
           </h2>

@@ -16,6 +16,15 @@
     animation: marquee 9s linear infinite;
   }
 }
+/* styles.css or Tailwind Custom Classes */
+.ProseMirror a {
+  text-decoration: underline;
+  color: purple;
+}
+
+
+
+
 :root {
   --primary: oklch(0.205 0 0);
   /* Light Primary */

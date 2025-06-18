@@ -5,13 +5,20 @@ import { ChevronDown, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 import React, { useState } from 'react'
 import Marquee from 'react-fast-marquee'
+import { Skeleton } from '../ui/skeleton'
 
 const Header = () => {
   const {data,error,isLoading} = useGetPendingPostQuery() as {data:AllPostData[],error:unknown,isLoading:unknown,refetch:()=>void}
   const [showPostStatus,setShowPostStatus] = useState(false)
   // console.log(data)
   if(isLoading)  {
-    return <div> <LoadingSpinner/></div>
+    return (
+      <div className="space-y-2 ">
+        <Skeleton className="h-4 w-full bg-slate-400" />
+        <Skeleton className="h-4 w-full bg-slate-400" />
+        {/* <div> <LoadingSpinner/></div> */}
+      </div>
+        )
   }
   if(error) {
   
@@ -19,7 +26,7 @@ const Header = () => {
   return (
      <div className=" mx-auto  bg-black text-white px-6 py-3 flex items-center justify-between rounded-md ">
               <div className='w-[30%] mx-auto'>
-                  <Marquee className=''>
+                  {/* <Marquee className=''>
                    
                     <p className='text-sm font-medium pl-80'> First Post :{data[0]?.scheduledDate ? new Date(data[0].scheduledDate).toLocaleString('en-US', {
                       hour: 'numeric',
@@ -46,7 +53,8 @@ const Header = () => {
                       year: 'numeric'
                     }).replace(',', ',') : ''}</p>
 
-                </Marquee>
+                </Marquee> */}
+                <h1 className='text-center'>New Post</h1>
               </div>
 
                 <button className="w-6 h-6 bg-white rounded-full flex items-center justify-center">

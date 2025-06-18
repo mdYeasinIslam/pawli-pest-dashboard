@@ -21,6 +21,9 @@ import { usePostNewsMutation } from "@/redux/services/Api/post/postApi"
 import JoditTextArea from "../jodit-react/JoditTextArea"
 import Marquee from "./HeaderSlider/Marquee "
 import MarqueeHeader from "./HeaderSlider/Marquee "
+import ToolTipField from "./jodit-editor/ToolTipField"
+import TextEditor from "./jodit-editor/ToolTip"
+import ToolTip from "./jodit-editor/ToolTip"
 interface PostCreatorProps {
   initialData?: Partial<PostData>
   onSave?: (data: PostData) => void
@@ -188,6 +191,8 @@ export default function HomeSection() {
                                   setLinkText={setLinkText}
                               
                               />
+                              {/* <ToolTipField/>
+                              <ToolTip/> */}
                               {/* Push notification header section */}
                               <div className="space-y-3">
                                 <Label className="text-[28px] font-semibold font-urbanist">Push notification header</Label>

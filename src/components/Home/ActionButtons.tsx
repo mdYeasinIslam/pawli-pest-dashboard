@@ -36,9 +36,9 @@ const ActionButtons: React.FC<Prop> = ({
               >
                     Preview
                 </Button>
-                <Button onClick={() => setShowStaticModal(true)} className="cursor-pointer bg-pink-400 hover:bg-pink-500 text-white px-6 py-6 text-lg rounded-lg font-medium">
+                {/* <Button onClick={() => setShowStaticModal(true)} className="cursor-pointer bg-pink-400 hover:bg-pink-500 text-white px-6 py-6 text-lg rounded-lg font-medium">
                     Statistics
-                </Button>
+                </Button> */}
                 {/* <Button onClick={() => setShowStaticModal(true)} className="bg-black  hover:bg-pink-500 text-white px-6 py-6 text-lg rounded-lg font-medium">
                     Schedule Change
                 </Button> */}

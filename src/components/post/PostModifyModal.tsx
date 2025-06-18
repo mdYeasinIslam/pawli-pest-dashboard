@@ -6,7 +6,7 @@ import { Type } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { FileUpload } from "../file-upload/fill-upload"
-import { AllPostData, PostData } from "@/Types/post"
+import { AllPostData } from "@/Types/post"
 import { toast } from "sonner"
 import { Label } from "../ui/label"
 import { Input } from "../ui/input"
@@ -15,7 +15,7 @@ import DateTime from "../Home/DateTime"
 import TooltipContent from "../Home/TooltipContent"
 import Header from "../Home/Header"
 import { useParams, usePathname } from "next/navigation"
-import { useGetPostByIdQuery, useUpdatePostMutation } from "@/redux/services/Api/post/postApi"
+import { useGetAllPostQuery, useGetPostByIdQuery, useUpdatePostMutation } from "@/redux/services/Api/post/postApi"
 import LoadingSpinner from "@/app/loading"
 import Link from "next/link"
 
@@ -29,6 +29,7 @@ export default function PostModifyModal() {
     const pathName = usePathname()
     const param = useParams();
     const id = param.id as string
+  const { refetch:makeRefetch } = useGetAllPostQuery();
 
     const { data, error, isLoading, refetch } = useGetPostByIdQuery(id) as { data: PostStat, error: unknown, isLoading: unknown, refetch: () => void }
     const [updatePost] = useUpdatePostMutation()
@@ -50,6 +51,7 @@ export default function PostModifyModal() {
         if (data?.data) {
             setPostData(data.data);
             refetch()
+           
         }
     }, [data]);
 
@@ -81,7 +83,7 @@ export default function PostModifyModal() {
 
     // Handle update function
     const handleUpdate = async () => {
-        console.log(linkText.length, contentText.length)
+        // console.log(linkText.length, contentText.length)
         if (!linkText.length  || !contentText.length) {
             setCheckText(false)
             toast.error("Please fill in all fields before validating. (image, tooltip, notification)")
@@ -108,8 +110,11 @@ export default function PostModifyModal() {
             // Call the mutation to update the post
 
             const res = await updatePost({ id, data: formData }).unwrap();
-            console.log('Post updated:', res);
-            toast.success('Post updated successfully');
+            // console.log('Post updated:', res);
+            if(res.message ==='Post updated'){
+                makeRefetch()
+                toast.success('Post updated successfully');
+            }
         } catch (error) {
             console.error('Post update failed:', error);
             toast.error('Failed to update post');
@@ -175,6 +180,7 @@ export default function PostModifyModal() {
                                     <div className="relative">
                                         <Textarea
                                             placeholder="write here"
+                                            readOnly
                                             onChange={(e) => setContentText(e?.target?.value)}
                                             defaultValue={postData?.pushContent}
                                             
