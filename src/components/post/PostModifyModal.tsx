@@ -51,7 +51,6 @@ export default function PostModifyModal() {
         if (data?.data) {
             setPostData(data.data);
             refetch()
-           
         }
     }, [data]);
 
@@ -131,10 +130,27 @@ export default function PostModifyModal() {
     }, [isYes])
 
     const getDateAndTime = (date: string, time: string) => {
-        setPostDate(date)
-        setPostTime(time)
+        console.log(date,'date')
+        console.log(time,'time')
+        const timeFromPost = postData?.scheduledDate?.split('T')[1]
+        const dateFromPost = postData?.scheduledDate?.split('T')[0]
+        if(date && time){
+            setPostDate(date)
+            setPostTime(time)
+        } 
+        else if(date && timeFromPost) {
+            setPostDate(date)
+            setPostTime(timeFromPost)
+        }
+        else if(time && dateFromPost){
+            setPostTime(time)
+            setPostDate(dateFromPost)
+        }
     }
-
+    // console.log(postDate,postTime)
+    console.log(postDate,'date in state')
+    console.log(postTime,'time in state')
+    console.log(postData)
     if (isLoading) { return <LoadingSpinner /> }
     if (error) { return <div>An error occurred</div> }
 
@@ -142,7 +158,7 @@ export default function PostModifyModal() {
         <section className="h-full my-8 ">
             <div className="container mx-auto px-6 space-y-6 ">
                 {/* Header */}
-                <Header />
+                <Header date={postData?.scheduledDate}/>
 
                 {/* Main Content */}
                 <div className="">

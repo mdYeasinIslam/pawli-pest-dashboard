@@ -15,7 +15,7 @@ type PropType = {
   setPostDate?: React.Dispatch<React.SetStateAction<string>>
   isYes?:boolean
   getDateAndTime: (date: string, time: string) => void
-   postData?: AllPostData | null
+   postData?: AllPostData | null 
 }
 
 const DateTime = ({ getDateAndTime,isYes,postData }: PropType) => {
@@ -26,12 +26,12 @@ const DateTime = ({ getDateAndTime,isYes,postData }: PropType) => {
   const hour =postData?.scheduledDate?.split('T')[1].split(':')[0];
   const min =postData?.scheduledDate?.split('T')[1].split(':')[1];
 
-console.log(hour,min)
+// console.log(hour,min)
   const [date, setDate] = useState<Date | undefined>(
     currentData ? new Date(currentData) : undefined
   )
   // Convert 24-hour format to 12-hour format and determine period
-  let initialHour = "12";
+  let initialHour = "11";
   let initialMinute = "00";
   let initialPeriod = "AM";
   if (hour && min) {
@@ -41,31 +41,18 @@ console.log(hour,min)
     initialMinute = min;
   }
   const [time, setTime] = useState({ hour: initialHour, minute: initialMinute, period: initialPeriod })
-// useEffect(() => {
-//     // Extract hour and minute from postData (assuming it's in 24-hour format)
-//     const hour = postData?.scheduledDate?.split('T')[1].split(':')[0]; // Hour in 24-hour format
-//     const min = postData?.scheduledDate?.split('T')[1].split(':')[1]; // Minute
+  useEffect(()=>{
+    setTime({hour:initialHour,minute:initialMinute,period:initialPeriod})
+  },[initialHour,initialMinute,initialPeriod])
 
-//     if (hour && min) {
-//       // Convert hour from 24-hour format to 12-hour format
-//       let h = parseInt(hour, 10);
-//       let period = h >= 12 ? "PM" : "AM";
-//       let formattedHour = (h % 12 === 0 ? 12 : h % 12).toString(); // Handle hour conversion
-
-//       // Set the time state with hour, minute, and period
-//       setTime({ hour: formattedHour, minute: min, period: period });
-//     }
-//   }, [postData]); // Only rerun when postData changes
-// console.log(time)
   const formatTime = (hour: string, minute: string, period: string) => {
     return `${hour}:${minute} ${period}`
   }
-  // console.log(currentData)
-  console.log(postData)
-  // Format date as 2025-05-30
+
   const formattedDate = date
     ? `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${date?.getDate()?.toString()?.padStart(2, "0")}`
     : '';
+
   // Format time as 04:06 (24-hour format)
   // Convert 12-hour time to 24-hour format
   const hour24 =
@@ -81,7 +68,6 @@ console.log(hour,min)
   React.useEffect(() => {
     if (!isYes) {
       getDateAndTime('no','no')
-      console.log(isYes)
     }
     else {
       getDateAndTime(formattedDate, formattedTime)

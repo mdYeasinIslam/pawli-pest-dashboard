@@ -7,7 +7,7 @@ import React, { useState } from 'react'
 import Marquee from 'react-fast-marquee'
 import { Skeleton } from '../ui/skeleton'
 
-const Header = () => {
+const Header = ({date}:{date?:string}) => {
   const {data,error,isLoading} = useGetPendingPostQuery() as {data:AllPostData[],error:unknown,isLoading:unknown,refetch:()=>void}
   const [showPostStatus,setShowPostStatus] = useState(false)
   // console.log(data)
@@ -20,9 +20,10 @@ const Header = () => {
       </div>
         )
   }
-  if(error) {
-  
-  return  <div>{error ? String(error) : 'An error occurred'}</div>}
+
+  if(error) {  
+  return  <div>{error ? String(error) : 'An error occurred'}</div>
+}
   return (
      <div className=" mx-auto  bg-black text-white px-6 py-3 flex items-center justify-between rounded-md ">
               <div className='w-[30%] mx-auto'>
@@ -54,7 +55,16 @@ const Header = () => {
                     }).replace(',', ',') : ''}</p>
 
                 </Marquee> */}
-                <h1 className='text-center'>New Post</h1>
+                {
+                  date? 
+                  <>
+                  <h1 className='text-center'>Date of Publication : {date?.split('T')[0]}</h1>
+                  </>
+                  :
+                  <>
+                    <h1 className='text-center'>New Post</h1>
+                  </>
+                }
               </div>
 
                 <button className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
