@@ -18,12 +18,6 @@ import Header from "./Header"
 import ActionButtons from "./ActionButtons"
 import TooltipContent from "./TooltipContent"
 import { usePostNewsMutation } from "@/redux/services/Api/post/postApi"
-import JoditTextArea from "../jodit-react/JoditTextArea"
-import Marquee from "./HeaderSlider/Marquee "
-import MarqueeHeader from "./HeaderSlider/Marquee "
-import ToolTipField from "./jodit-editor/ToolTipField"
-import TextEditor from "./jodit-editor/ToolTip"
-import ToolTip from "./jodit-editor/ToolTip"
 interface PostCreatorProps {
   initialData?: Partial<PostData>
   onSave?: (data: PostData) => void
@@ -111,7 +105,7 @@ export default function HomeSection() {
 
       // 3. Call API
       // const res = await postNews(formData).unwrap();
-      fetch('https://pauline.onrender.com/api/v1/posts', {
+      fetch('https://api.paoline.code-commando.com/api/v1/posts', {
         method: "POST",
         body: formData
       }).then(res => res.json())

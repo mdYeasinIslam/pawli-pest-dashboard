@@ -6,7 +6,8 @@ import { AllPostData } from "@/Types/post";
 export const postApi = createApi({
     reducerPath: 'postapi',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'https://pauline.onrender.com/api/v1'
+        baseUrl: 'https://api.paoline.code-commando.com/api/v1'
+        // baseUrl: 'https://pauline.onrender.com/api/v1'
     }),
     tagTypes:['Post'],
     endpoints: (build) => ({
